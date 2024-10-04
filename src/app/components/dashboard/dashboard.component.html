@@ -1,15 +1,15 @@
- <div class="flex flex-col items-start p-6 bg-white shadow-md rounded-lg">
-    <h1 class="text-3xl font-semibold text-blue-600">Dashboard</h1>
-    <p class="mt-2 text-gray-600">Aquí podrás ver tu progreso y las inversiones.</p>
-    <button (click)="logOut()">Cerrar Sesión</button>
-    <!-- Agrega más elementos según tus necesidades -->
-    <div class="mt-4 w-full">
-      <h2 class="text-xl font-medium">Tus Inversiones</h2>
-      <ul class="mt-2">
-        <li class="bg-gray-100 p-4 rounded-md shadow-sm">Inversión 1</li>
-        <li class="bg-gray-100 p-4 rounded-md shadow-sm mt-2">Inversión 2</li>
-        <li class="bg-gray-100 p-4 rounded-md shadow-sm mt-2">Inversión 3</li>
-      </ul>
-    </div>
-  </div>
+<div class="dashboard-container flex flex-col items-start p-6 bg-white shadow-md rounded-lg">
+  <h1 class="dashboard-title text-3xl font-semibold text-blue-600">Dashboard</h1>
+  <p class="dashboard-description mt-2 text-gray-600">Aquí podrás ver tu progreso y las inversiones.</p>
+  <button (click)="logOut()" class="logout-button">Cerrar Sesión</button>
   
+  <div class="investments-section mt-4 w-full">
+    <h2 class="investments-title text-xl font-medium">Tus Inversiones</h2>
+    <ul class="investments-list mt-2">
+      <li class="investment-item bg-gray-100 p-4 rounded-md shadow-sm">Inversión 1</li>
+      <li class="investment-item bg-gray-100 p-4 rounded-md shadow-sm mt-2">Inversión 2</li>
+      <li class="investment-item bg-gray-100 p-4 rounded-md shadow-sm mt-2">Inversión 3</li>
+    </ul>
+  </div>
+</div>
+

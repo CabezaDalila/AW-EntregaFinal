@@ -1,0 +1,46 @@
+header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 10;
+  background-color: rgba(85, 26, 153, 0.9); /* Color de fondo con opacidad */
+  backdrop-filter: blur(10px); /* Efecto de desenfoque en el fondo */
+
+  .container {
+    max-width: 1200px; /* Ajusta el ancho máximo según tu diseño */
+    margin: 0 auto; /* Centra el contenedor */
+    padding: 1rem; /* Espaciado para móviles */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo-image {
+    height: 60px; /* Ajusta a la altura deseada */
+    width: auto; /* Mantiene la proporción */
+  }
+
+  nav {
+    ul {
+      display: flex;
+      flex-wrap: wrap; /* Permite que los elementos se ajusten en pantallas pequeñas */
+      gap: 1.5rem; /* Espacio entre los elementos */
+
+      li {
+        a {
+          color: white;
+          transition: color 0.3s ease;
+          &:hover {
+            color: rgba(156, 163, 175, 1); /* Color de hover más suave */
+          }
+        }
+      }
+    }
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      padding: 1.5rem; /* Ajusta el espaciado para pantallas más grandes */
+    }
+  }
+}

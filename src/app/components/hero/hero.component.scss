@@ -1,0 +1,57 @@
+.hero {
+  min-height: 100vh; /* Cambiado de height a min-height para mejorar la responsividad */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, #4a1d96, #000000);
+  
+  .hero-content {
+    text-align: center;
+    padding: 2rem; /* Añadido espaciado para móviles */
+  }
+
+  .hero-title {
+    font-size: 2.25rem; /* Cambiado a un tamaño más pequeño para móviles */
+    font-weight: bold;
+    margin-bottom: 1rem;
+
+    @media (min-width: 768px) {
+      font-size: 3rem; /* Aumento en pantallas más grandes */
+    }
+
+    @media (min-width: 1024px) {
+      font-size: 4rem; /* Aumento adicional en pantallas extra grandes */
+    }
+  }
+
+  .hero-subtitle {
+    font-size: 1rem; /* Cambiado a un tamaño más pequeño para móviles */
+    margin-bottom: 2rem;
+
+    @media (min-width: 768px) {
+      font-size: 1.25rem; /* Aumento en pantallas más grandes */
+    }
+
+    @media (min-width: 1024px) {
+      font-size: 1.5rem; /* Aumento adicional en pantallas extra grandes */
+    }
+  }
+
+  .hero-button {
+    background-color: #7c3aed;
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 1rem; /* Cambiado a un tamaño más pequeño para móviles */
+    transition: background-color 0.3s ease;
+
+    @media (min-width: 768px) {
+      font-size: 1.125rem; /* Aumento en pantallas más grandes */
+    }
+
+    &:hover {
+      background-color: #6d28d9;
+    }
+  }
+}
