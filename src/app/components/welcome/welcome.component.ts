@@ -36,12 +36,13 @@ import { HeaderComponent } from '../header/header.component';
 import { HeroComponent } from '../hero/hero.component';
 import { ServicesComponent } from '../services/services.component';
 import { TestimonialsComponent } from '../testimonials/testimonials.component';
+import { FooterComponent } from '../footer/footer.component';
 
 
 @Component({
   selector: 'app-welcome',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, HeroComponent, ServicesComponent, TestimonialsComponent],
+  imports: [CommonModule, HeaderComponent, HeroComponent, ServicesComponent, TestimonialsComponent,FooterComponent],
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.scss']
 })
