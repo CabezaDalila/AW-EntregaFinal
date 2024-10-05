@@ -15,10 +15,8 @@ import { CommonModule } from '@angular/common';
           </div>
           <nav class="mb-6 md:mb-0">
             <ul class="space-y-2 md:space-y-0 md:flex md:space-x-4">
-              <li><a href="#" class="hover:text-purple-200 transition-colors">Inicio</a></li>
-              <li><a href="#" class="hover:text-purple-200 transition-colors">Aprender</a></li>
-              <li><a href="#" class="hover:text-purple-200 transition-colors">Invertir</a></li>
-              <li><a href="#" class="hover:text-purple-200 transition-colors">Comunidad</a></li>
+              <li><a href="#" class="hover:text-purple-200 transition-colors">Nosotros</a></li>
+              <li><a href="#" class="hover:text-purple-200 transition-colors">Glosario</a></li>
             </ul>
           </nav>
           <div class="mb-6 md:mb-0">
