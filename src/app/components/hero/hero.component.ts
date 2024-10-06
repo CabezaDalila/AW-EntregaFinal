@@ -24,7 +24,6 @@ import { CommonModule } from '@angular/common';
       </div>
       <div class="hidden md:block w-full mx-auto overflow-hidden">
         <div class="max-w-6xl mx-auto relative">
-          <div class="absolute inset-0 bg-gradient-to-t from-purple-500 to-transparent opacity-75"></div>
           <img 
             src="../assets/photos/Capture.PNG" 
             alt="Dashboard Preview" 

@@ -9,28 +9,34 @@ import { trigger, transition, style, animate, state } from '@angular/animations'
   template: `
     <header class="fixed w-full top-0 z-20 transition-all duration-300" [ngClass]="{'bg-purple-900': !isScrolled, 'bg-purple-800 bg-opacity-80': isScrolled}">
       <div class="container mx-auto px-4 py-3">
-        <div class="flex justify-between items-center">
-          <a href="#" class="text-2xl font-bold text-white flex items-center">
-            <img src="assets/logo/MockVest-logo-white.png" alt="MockVest Logo" class="h-14 w-auto mr-2" />
-          </a>
-          <button (click)="toggleMenu()" class="lg:hidden text-white focus:outline-none z-30">
-            <svg *ngIf="!isMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-            <svg *ngIf="isMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          <nav class="hidden lg:flex space-x-6">
-            <a href="#" class="text-white hover:text-purple-200 transition-colors">Nosotros</a>
-            <a href="#" class="text-white hover:text-purple-200 transition-colors">Glosario</a>
-          </nav>
-          <div class="hidden lg:flex space-x-4">
-            <button (click)="onCreateAccountClick()" class="bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 rounded transition-colors">
-              Crear cuenta
-            </button>
-            <button (click)="onLoginClick()" class="bg-transparent border border-white hover:bg-white hover:text-purple-900 text-white font-bold py-2 px-4 rounded-lg transition-colors">
-              Iniciar sesión
+        <div class="flex items-center justify-between">
+          <div class="flex-shrink-0 w-1/4">
+            <a href="#" class="text-2xl font-bold text-white flex items-center">
+              <img src="assets/logo/MockVest-logo-white.png" alt="MockVest Logo" class="h-14 w-auto mr-2" />
+            </a>
+          </div>
+          <div class="flex-grow flex justify-center">
+            <nav class="hidden lg:flex space-x-6">
+              <a href="#" class="text-white hover:text-purple-200 transition-colors">Nosotros</a>
+              <a href="#" class="text-white hover:text-purple-200 transition-colors">Glosario</a>
+            </nav>
+          </div>
+          <div class="flex-shrink-0 w-1/4 flex justify-end items-center">
+            <div class="hidden lg:flex space-x-4">
+              <button (click)="onCreateAccountClick()" class="bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 rounded transition-colors">
+                Crear cuenta
+              </button>
+              <button (click)="onLoginClick()" class="bg-transparent border border-white hover:bg-white hover:text-purple-900 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                Iniciar sesión
+              </button>
+            </div>
+            <button (click)="toggleMenu()" class="lg:hidden text-white focus:outline-none z-30 ml-4">
+              <svg *ngIf="!isMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+              <svg *ngIf="isMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
           </div>
         </div>
