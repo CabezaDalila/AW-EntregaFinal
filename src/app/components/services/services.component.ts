@@ -13,12 +13,12 @@ interface Service {
   standalone: true,
   imports: [CommonModule],
   template: `
-    <section class="py-16 bg-gradient-to-br from-purple-900 via-purple-700 to-purple-500">
+    <section class="py-16 bg-white">
       <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center text-white mb-12">Descubre MockVest</h2>
+        <h2 class="text-4xl font-bold text-center text-purple-900 mb-12">Descubre MockVest</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div *ngFor="let service of services; let i = index" 
-               class="bg-white rounded-lg shadow-lg p-6 transform transition duration-500 hover:scale-105"
+               class="bg-purple-50 rounded-lg shadow-lg p-6 transform transition duration-500 hover:scale-105"
                [@fadeInOut]="service.state"
                (mouseenter)="onMouseEnter(i)"
                (mouseleave)="onMouseLeave(i)">
@@ -26,7 +26,7 @@ interface Service {
               <i [class]="service.icon + ' text-2xl'"></i>
             </div>
             <h3 class="text-xl font-semibold text-purple-900 mb-2">{{ service.title }}</h3>
-            <p class="text-gray-600">{{ service.description }}</p>
+            <p class="text-gray-700">{{ service.description }}</p>
           </div>
         </div>
       </div>
@@ -89,8 +89,7 @@ export class ServicesComponent implements OnInit {
     }
   ];
 
-  ngOnInit() {  
-    // Iniciar la animación de aparición gradual
+  ngOnInit() {
     setTimeout(() => {
       this.services.forEach((service, index) => {
         setTimeout(() => {

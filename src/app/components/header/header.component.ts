@@ -1,24 +1,25 @@
 import { Component, Output, EventEmitter, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   template: `
     <header class="fixed w-full top-0 z-20 transition-all duration-300" [ngClass]="{'bg-purple-900': !isScrolled, 'bg-purple-800 bg-opacity-80': isScrolled}">
       <div class="container mx-auto px-4 py-3">
         <div class="flex items-center justify-between">
           <div class="flex-shrink-0 w-1/4">
-            <a href="#" class="text-2xl font-bold text-white flex items-center">
+            <a routerLink="/" class="text-2xl font-bold text-white flex items-center">
               <img src="assets/logo/MockVest-logo-white.png" alt="MockVest Logo" class="h-14 w-auto mr-2" />
             </a>
           </div>
           <div class="flex-grow flex justify-center">
             <nav class="hidden lg:flex space-x-6">
-              <a href="#" class="text-white hover:text-purple-200 transition-colors">Nosotros</a>
-              <a href="#" class="text-white hover:text-purple-200 transition-colors">Glosario</a>
+              <a routerLink="/about" class="text-white hover:text-purple-200 transition-colors">Nosotros</a>
+              <a routerLink="/glossary" class="text-white hover:text-purple-200 transition-colors">Glosario</a>
             </nav>
           </div>
           <div class="flex-shrink-0 w-1/4 flex justify-end items-center">
@@ -48,7 +49,7 @@ import { trigger, transition, style, animate, state } from '@angular/animations'
          [ngClass]="{'pointer-events-none': !isMenuOpen}">
       <div class="container mx-auto px-4 py-3">
         <div class="flex justify-between items-center">
-          <a href="#" class="text-2xl font-bold text-white flex items-center">
+          <a routerLink="/" class="text-2xl font-bold text-white flex items-center">
             <img src="assets/logo/MockVest-logo-white.png" alt="MockVest Logo" class="h-14 w-auto mr-2" />
           </a>
           <button (click)="toggleMenu()" class="text-white focus:outline-none z-30">
@@ -60,8 +61,8 @@ import { trigger, transition, style, animate, state } from '@angular/animations'
       </div>
       <div class="flex flex-col items-center justify-start h-full pt-20">
         <nav class="flex flex-col space-y-4 items-center">
-          <a href="#" class="text-white hover:text-purple-200 transition-colors text-xl">Nosotros</a>
-          <a href="#" class="text-white hover:text-purple-200 transition-colors text-xl">Glosario</a>
+          <a routerLink="/about" (click)="toggleMenu()" class="text-white hover:text-purple-200 transition-colors text-xl">Nosotros</a>
+          <a routerLink="/glossary" (click)="toggleMenu()" class="text-white hover:text-purple-200 transition-colors text-xl">Glosario</a>
         </nav>
         <div class="mt-8 flex flex-col space-y-4 w-64">
           <button (click)="onCreateAccountClick()" class="bg-purple-500 hover:bg-purple-400 text-white font-bold py-3 px-6 rounded transition-colors w-full">
