@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
   template: `
     <footer class="bg-purple-900 text-white py-8">
       <div class="container mx-auto px-4">
@@ -16,7 +17,7 @@ import { CommonModule } from '@angular/common';
           <nav class="mb-6 md:mb-0">
             <ul class="space-y-2 md:space-y-0 md:flex md:space-x-4">
               <li><a href="#" class="hover:text-purple-200 transition-colors">Nosotros</a></li>
-              <li><a href="#" class="hover:text-purple-200 transition-colors">Glosario</a></li>
+              <li><a routerLink="/glossary" class="hover:text-purple-200 transition-colors">Glosario</a></li>
             </ul>
           </nav>
           <div class="mb-6 md:mb-0">
