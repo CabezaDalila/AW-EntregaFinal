@@ -3,6 +3,7 @@ import { provideRouter } from '@angular/router';
 import { provideAuth0 } from '@auth0/auth0-angular';
 import { provideAnimations } from '@angular/platform-browser/animations'; 
 import { routes } from './app.routes';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +15,7 @@ export const appConfig: ApplicationConfig = {
         redirect_uri: window.location.origin
       }
     }),
-    provideAnimations()
+    provideAnimations(),
+    provideHttpClient()
   ] 
 };

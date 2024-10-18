@@ -9,13 +9,7 @@ import { filter, Subscription } from 'rxjs';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, FooterComponent],
-  template: `
-    <app-header (loginClick)="login()"></app-header>
-    <main>
-      <router-outlet></router-outlet>
-    </main>
-    <app-footer></app-footer>
-  `,
+  template: `<router-outlet></router-outlet> `,
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit, OnDestroy {

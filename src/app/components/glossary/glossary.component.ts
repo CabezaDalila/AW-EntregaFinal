@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { FooterComponent } from '../footer/footer.component';
+import { HeaderComponent } from '../header/header.component';
 
 interface GlossaryTerm {
   id: number;
@@ -13,9 +15,10 @@ interface GlossaryTerm {
 @Component({
   selector: 'app-glossary',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HeaderComponent, FooterComponent],
   template: `
     <div class="min-h-screen bg-gradient-to-br from-purple-100 to-white">
+      <app-header></app-header>
       <div class="container mx-auto px-4 py-16">
         <h1 class="text-4xl font-bold text-center text-purple-900 mb-4 mt-16">Glosario Financiero</h1>
         <p class="text-center text-gray-600 mb-8">Explora términos financieros clave para mejorar tu comprensión del mundo de las inversiones.</p>
@@ -88,6 +91,7 @@ interface GlossaryTerm {
           </div>
         </div>
       </div>
+      <app-footer></app-footer> 
     </div>
   `,
   animations: [
