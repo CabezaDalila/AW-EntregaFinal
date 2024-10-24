@@ -4,12 +4,13 @@ import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
 import { ApiPolygonService } from '../../Services/api-polygon.service';
+import { HeaderComponent } from '../../components/header/header.component'
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, HeaderComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   providers: [ApiPolygonService] 

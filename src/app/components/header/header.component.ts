@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { trigger, transition, style, animate, state } from '@angular/animations';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-header',
@@ -16,20 +17,35 @@ import { trigger, transition, style, animate, state } from '@angular/animations'
               <img src="assets/logo/MockVest-logo-white.png" alt="MockVest Logo" class="h-14 w-auto mr-2" />
             </a>
           </div>
-          <div class="flex-grow flex justify-center">
-            <nav class="hidden lg:flex space-x-6">
-              <a routerLink="/about" class="text-white hover:text-purple-200 transition-colors">Nosotros</a>
-              <a routerLink="/glossary" class="text-white hover:text-purple-200 transition-colors">Glosario</a>
-            </nav>
-          </div>
+          <ng-container *ngIf="(auth.user$ | async) === null">
+            <div class="flex-grow flex justify-center">
+              <nav class="hidden lg:flex space-x-6">
+                <a routerLink="/about" class="text-white hover:text-purple-200 transition-colors">Nosotros</a>
+                <a routerLink="/glossary" class="text-white hover:text-purple-200 transition-colors">Glosario</a>
+              </nav>
+            </div>
+          </ng-container>
           <div class="flex-shrink-0 w-1/4 flex justify-end items-center">
             <div class="hidden lg:flex space-x-4">
-              <button (click)="onCreateAccountClick()" class="bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 rounded transition-colors">
-                Crear cuenta
-              </button>
-              <button (click)="onLoginClick()" class="bg-transparent border border-white hover:bg-white hover:text-purple-900 text-white font-bold py-2 px-4 rounded-lg transition-colors">
-                Iniciar sesión
-              </button>
+              
+           <ng-container *ngIf="auth.user$ | async as user; else loggedOut">
+            <button (click)="logOut()"
+              class="bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 rounded transition-colors">
+              Cerrar Sesión
+            </button>
+            <!-- <p>{{ user.name }}</p> -->
+          </ng-container>
+          <ng-template #loggedOut>
+            <button (click)="onLoginClick()"
+              class="bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 rounded transition-colors">
+              Crear cuenta
+            </button>
+            <button (click)="onLoginClick()"
+              class="bg-transparent border border-white hover:bg-white hover:text-purple-900 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+              Iniciar sesión
+            </button>
+          </ng-template>
+
             </div>
             <button (click)="toggleMenu()" class="lg:hidden text-white focus:outline-none z-30 ml-4">
               <svg *ngIf="!isMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -129,6 +145,10 @@ export class HeaderComponent {
   isMenuOpen = false;
   isScrolled = false;
 
+  constructor(public auth: AuthService){
+  }
+  
+
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
     this.isScrolled = window.scrollY > 10;
@@ -136,6 +156,10 @@ export class HeaderComponent {
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  logOut() {
+    this.auth.logout({ logoutParams: { returnTo: window.location.origin } });
   }
 
   @Output() loginClick = new EventEmitter<void>();
