@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
-import { DataUsersService } from '../../data-users.service';
-
+import { ApiPolygonService } from '../../Services/api-polygon.service';
 
 
 @Component({
@@ -13,17 +12,17 @@ import { DataUsersService } from '../../data-users.service';
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  providers: [DataUsersService] // Add this line to provide the service
+  providers: [ApiPolygonService] 
 })
 export class DashboardComponent implements OnInit {
   stockForm: FormGroup;
-  stockData: StockData | null = null;
+  stockData: any;
 
   constructor(
     public auth: AuthService,
     private router: Router,
     private fb: FormBuilder,
-    private dataService: DataUsersService
+    private apiPolygon: ApiPolygonService
   ) {
     this.stockForm = this.fb.group({
       ticker: ['', Validators.required],
@@ -48,17 +47,18 @@ export class DashboardComponent implements OnInit {
   getStockData() {
     if (this.stockForm.valid) {
       const { ticker, startDate, endDate } = this.stockForm.value;
-      this.dataService.getStockData(ticker, startDate, endDate).subscribe({
-        next: (data: StockData) => {
-          this.stockData = data;
-          console.log(data);
+      this.apiPolygon.getStockData(ticker, startDate, endDate).subscribe(
+        (data) => {
+          this.stockData = data; // Almacenar los datos para mostrarlos en la vista
+          console.log(this.stockData);
         },
-        error: (error: unknown) => {
+        (error) => {
           console.error('Error fetching stock data', error);
         }
-      });
+      );
     } else {
-      console.log('Form is not valid');
+      console.log('Formulario no es válido');
     }
   }
+ 
 }
