@@ -1,14 +1,12 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
 @Injectable({
   providedIn: 'root'
 })
-export class DataUsersService {
+export class ApiPolygonService {
   private apiKey = '8nkipGR5ayMVs3Ax0tvUAuhhMxuWOa7z';
   private baseUrl = 'https://api.polygon.io/v2/aggs/ticker/';
-
   constructor(private http: HttpClient) {}
 
   getStockData(ticker: string, startDate: string, endDate: string): Observable<any> {

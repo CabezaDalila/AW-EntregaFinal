@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
-import { DataUsersService } from '../../data-users.service';
-
+import { ApiPolygonService } from '../../Services/api-polygon.service';
 interface StockData {
   // Define the structure of your stock data here
   // This is an example, adjust according to the actual API response
@@ -27,7 +26,7 @@ interface StockData {
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  providers: [DataUsersService] // Add this line to provide the service
+  providers: [ApiPolygonService] 
 })
 export class DashboardComponent implements OnInit {
   stockForm: FormGroup;
@@ -37,7 +36,7 @@ export class DashboardComponent implements OnInit {
     public auth: AuthService,
     private router: Router,
     private fb: FormBuilder,
-    private dataService: DataUsersService
+    private apiPolygon: ApiPolygonService
   ) {
     this.stockForm = this.fb.group({
       ticker: ['', Validators.required],
@@ -62,7 +61,7 @@ export class DashboardComponent implements OnInit {
   getStockData() {
     if (this.stockForm.valid) {
       const { ticker, startDate, endDate } = this.stockForm.value;
-      this.dataService.getStockData(ticker, startDate, endDate).subscribe({
+      this.apiPolygon.getStockData(ticker, startDate, endDate).subscribe({
         next: (data: StockData) => {
           this.stockData = data;
           console.log(data);
