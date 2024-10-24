@@ -1,27 +1,52 @@
-<div class="dashboard-container">
-  <h1>Dashboard</h1>
-  
-  <form [formGroup]="stockForm" (ngSubmit)="getStockData()">
-    <div>
-      <label for="ticker">Ticker:</label>
-      <input id="ticker" type="text" formControlName="ticker">
+<div class="stock-search-container">
+
+
+  <h2>Buscador de acciones</h2>
+
+  <form class="form-container" [formGroup]="stockForm" (submit)="getStockData()">
+    <div class="input-container">
+      <label for="ticker">Ticker</label>
+      <input formControlName="ticker" type="text" id="ticker" placeholder="Ingrese el simbolo (ej. AAPL)">
     </div>
-    <div>
-      <label for="startDate">Start Date:</label>
-      <input id="startDate" type="date" formControlName="startDate">
+
+    <div class="input-container">
+      <label for="startDate">Start Date</label>
+      <input formControlName="startDate" type="date" id="startDate">
     </div>
-    <div>
-      <label for="endDate">End Date:</label>
-      <input id="endDate" type="date" formControlName="endDate">
+
+    <div class="input-container">
+      <label for="endDate">End Date</label>
+      <input formControlName="endDate" type="date" id="endDate">
     </div>
-    <button type="submit" [disabled]="!stockForm.valid">Get Stock Data</button>
+
+    <button type="submit" class="button">Obtener datos</button>
   </form>
 
-  <div *ngIf="stockData">
-    <h2>Stock Data for {{ stockForm.get('ticker')?.value }}</h2>
-    <pre>{{ stockData | json }}</pre>
-  </div>
-
-  <button (click)="logOut()" class="logout-button">Cerrar Sesión</button>
 </div>
+@if(stockData && stockData.results){
+<h3>Resultados para {{ stockData.ticker }}</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Volumen </th>
+      <th>Precio promedio por volumen</th>
+      <th>Apertura</th>
+      <th>Cierre</th>
+      <th>Máximo</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for(result of stockData.results; track result.v){
+    <tr>
+      <td>{{ result.v }}</td>
+      <td>{{ result.vw }}</td>
+      <td>{{ result.o }}</td>
+      <td>{{ result.c }}</td>
+      <td>{{ result.h }}</td>
+    </tr>
+
+    }
+  </tbody>
+</table>
+}
 

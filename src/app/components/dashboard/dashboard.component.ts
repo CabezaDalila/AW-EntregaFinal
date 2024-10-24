@@ -4,21 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
 import { ApiPolygonService } from '../../Services/api-polygon.service';
-interface StockData {
-  // Define the structure of your stock data here
-  // This is an example, adjust according to the actual API response
-  ticker: string;
-  results: Array<{
-    c: number;
-    h: number;
-    l: number;
-    n: number;
-    o: number;
-    t: number;
-    v: number;
-    vw: number;
-  }>;
-}
+
 
 @Component({
   selector: 'app-dashboard',
@@ -30,7 +16,7 @@ interface StockData {
 })
 export class DashboardComponent implements OnInit {
   stockForm: FormGroup;
-  stockData: StockData | null = null;
+  stockData: any;
 
   constructor(
     public auth: AuthService,
@@ -61,17 +47,18 @@ export class DashboardComponent implements OnInit {
   getStockData() {
     if (this.stockForm.valid) {
       const { ticker, startDate, endDate } = this.stockForm.value;
-      this.apiPolygon.getStockData(ticker, startDate, endDate).subscribe({
-        next: (data: StockData) => {
-          this.stockData = data;
-          console.log(data);
+      this.apiPolygon.getStockData(ticker, startDate, endDate).subscribe(
+        (data) => {
+          this.stockData = data; // Almacenar los datos para mostrarlos en la vista
+          console.log(this.stockData);
         },
-        error: (error: unknown) => {
+        (error) => {
           console.error('Error fetching stock data', error);
         }
-      });
+      );
     } else {
-      console.log('Form is not valid');
+      console.log('Formulario no es válido');
     }
   }
+ 
 }
