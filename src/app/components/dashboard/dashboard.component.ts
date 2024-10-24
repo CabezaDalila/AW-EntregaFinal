@@ -5,21 +5,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
 import { DataUsersService } from '../../data-users.service';
 
-interface StockData {
-  // Define the structure of your stock data here
-  // This is an example, adjust according to the actual API response
-  ticker: string;
-  results: Array<{
-    c: number;
-    h: number;
-    l: number;
-    n: number;
-    o: number;
-    t: number;
-    v: number;
-    vw: number;
-  }>;
-}
+
 
 @Component({
   selector: 'app-dashboard',
