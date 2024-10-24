@@ -9,7 +9,7 @@ interface Service {
 }
 
 @Component({
-  selector: 'app-services',
+  selector: 'app-featureCards',
   standalone: true,
   imports: [CommonModule],
   template: `
@@ -49,7 +49,7 @@ interface Service {
     ])
   ]
 })
-export class ServicesComponent implements OnInit {
+export class FeatureCards implements OnInit {
   services: (Service & { state: string })[] = [
     {
       title: 'Aprende Invirtiendo',
