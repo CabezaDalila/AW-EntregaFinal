@@ -5,8 +5,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-testimonials',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './testimonials.component.html', // Cambia a templateUrl
-  styleUrls: ['./testimonials.component.scss'] // Cambia a styleUrls
+  templateUrl: './testimonials.component.html', 
+  styleUrls: ['./testimonials.component.scss'] 
 })
 export class TestimonialsComponent {}
 
