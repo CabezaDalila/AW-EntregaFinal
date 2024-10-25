@@ -1,20 +1,23 @@
-import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
 import { ApiPolygonService } from '../../Services/api-polygon.service';
-import { HeaderComponent } from '../../components/header/header.component'
+import { HeaderComponent } from '../../components/header/header.component';
+import { CryptoComponent } from '../crypto/crypto.component';
+import { IndexComponent } from '../index/index.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
+import { StocksComponent } from '../stocks/stocks.component';
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HeaderComponent,SideBarComponent,RouterModule,RouterOutlet],
+  imports: [CommonModule, ReactiveFormsModule, HeaderComponent, SideBarComponent, RouterModule, RouterOutlet, StocksComponent, CryptoComponent, IndexComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  providers: [ApiPolygonService] 
+  providers: [ApiPolygonService]
 })
 export class DashboardComponent implements OnInit {
   stockForm: FormGroup;
@@ -62,5 +65,5 @@ export class DashboardComponent implements OnInit {
       console.log('Formulario no es válido');
     }
   }
- 
+
 }
