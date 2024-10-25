@@ -6,8 +6,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class DataUsersService {
- 
+ userName:string='';
 
-  constructor( ) {}
+constructor( ) {}
+
 
 }

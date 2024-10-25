@@ -1,4 +1,4 @@
-<header class="fixed w-full top-0 z-20 transition-all duration-300" [ngClass]="{'bg-purple-900': !isScrolled, 'bg-purple-800 bg-opacity-80': isScrolled}">
+<header class="sticky w-full top-0 z-20 transition-all duration-300" [ngClass]="{'bg-purple-900': !isScrolled, 'bg-purple-800 bg-opacity-80': isScrolled}">
   <div class="container mx-auto px-4 py-3">
     <div class="flex items-center justify-between">
       <div class="flex-shrink-0 w-1/4">
@@ -63,23 +63,24 @@
   </div>
   <div class="flex flex-col items-center justify-start h-full pt-20">
     <ng-container *ngIf="!isDashboard; else dashboardMenu">
-      <nav class="flex flex-col space-y-4 items-center">
-        <a routerLink="/about" (click)="toggleMenu()" class="text-white hover:text-purple-200 transition-colors text-xl">Nosotros</a>
-        <a routerLink="/glossary" (click)="toggleMenu()" class="text-white hover:text-purple-200 transition-colors text-xl">Glosario</a>
-      </nav>
+    
       <div class="mt-8 flex flex-col space-y-4 w-64">
-        <button (click)="onCreateAccountClick()" class="bg-purple-500 hover:bg-purple-400 text-white font-bold py-3 px-6 rounded transition-colors w-full">
-          Crear cuenta
-        </button>
-        <button (click)="onLoginClick()" class="bg-transparent hover:bg-purple-800 text-purple-300 font-semibold hover:text-white py-3 px-6 border border-purple-300 hover:border-transparent rounded-lg transition-colors w-full">
-          Iniciar sesión
-        </button>
-      </div>
-      <div class="mt-16 text-center">
-        <p class="text-white text-lg mb-4">Seguinos:</p>
-        <div class="flex space-x-4">
-          <!-- Social media icons (unchanged) -->
-        </div>
+        <ng-container *ngIf="auth.user$ | async as user; else loggedOut">
+          <button (click)="logOut()"
+            class="bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 rounded transition-colors">
+            Cerrar Sesión
+          </button>
+        </ng-container>
+        <ng-template #loggedOut>
+          <button (click)="onLoginClick()"
+            class="bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 rounded transition-colors">
+            Crear cuenta
+          </button>
+          <button (click)="onLoginClick()"
+            class="bg-transparent border border-white hover:bg-white hover:text-purple-900 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+            Iniciar sesión
+          </button>
+        </ng-template>
       </div>
     </ng-container>
     <ng-template #dashboardMenu>

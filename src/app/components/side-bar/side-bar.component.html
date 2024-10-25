@@ -1,1 +1,31 @@
-<p>side-bar works!</p>
+<div class="flex flex-col w-64 h-full bg-white text-black p-4 shadow-lg ">
+    <div class="flex flex-col space-y-4">
+      <p></p>
+      <a routerLink="dashboard/home" class="flex items-center space-x-2 p-2 rounded hover:bg-gray-200">
+        <img src="../../../assets/icons/home.png" alt="dashboard" class="w-6 h-6"> 
+        <span>Dashboard</span>
+      </a>
+      <a routerLink="dashboard/stocks" class="flex items-center space-x-2 p-2 rounded hover:bg-gray-200">
+        <img src="../../../assets/icons/stock.png" alt="stocks" class="w-6 h-6">
+        <span>Stock</span>
+      </a>
+      <a routerLink="dashboard/index" class="flex items-center space-x-2 p-2 rounded hover:bg-gray-200">
+        <img src="../../../assets/icons/index-fund.png" alt="indexs" class="w-6 h-6">
+        <span>Index</span>
+      </a>
+      <a routerLink="dashboard/crypto" class="flex items-center space-x-2 p-2 rounded hover:bg-gray-200">
+        <img src="../../../assets/icons/cryptocurrency.png" alt="crypto" class="w-6 h-6">
+        <span>Crypto</span>
+      </a>
+    </div>
+    <div class="mt-auto flex items-center gap-2 " >
+        @if(this.userName){
+            <img [src]="this.userPicture" alt="user" class="w-10 h-10 rounded-full">
+            <p>{{this.userName}}</p>
+        }
+        @else {
+            <img src="../../../assets/icons/user.png" alt="user" class="w-10 h-10 rounded-full">
+            <p>UserName</p> 
+        }
+    </div>
+</div>

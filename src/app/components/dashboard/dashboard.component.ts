@@ -5,12 +5,13 @@ import { AuthService } from '@auth0/auth0-angular';
 import { FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
 import { ApiPolygonService } from '../../Services/api-polygon.service';
 import { HeaderComponent } from '../../components/header/header.component'
+import { SideBarComponent } from '../side-bar/side-bar.component';
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HeaderComponent,RouterModule,RouterOutlet],
+  imports: [CommonModule, ReactiveFormsModule, HeaderComponent,SideBarComponent,RouterModule,RouterOutlet],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   providers: [ApiPolygonService] 
