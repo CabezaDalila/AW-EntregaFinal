@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
 import { ApiPolygonService } from '../../Services/api-polygon.service';
@@ -10,7 +10,7 @@ import { HeaderComponent } from '../../components/header/header.component'
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HeaderComponent],
+  imports: [CommonModule, ReactiveFormsModule, HeaderComponent,RouterModule,RouterOutlet],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   providers: [ApiPolygonService] 
@@ -34,11 +34,11 @@ export class DashboardComponent implements OnInit {
 
   @HostListener('window:popstate', ['$event'])
   onPopState(event: Event) {
-    history.pushState(null, '', '/dashboard');
+    // history.pushState(null, '', '/dashboard');
   }
 
   ngOnInit() {
-    history.pushState(null, '', '/dashboard');
+    // history.pushState(null, '', '/dashboard');
   }
 
   logOut() {

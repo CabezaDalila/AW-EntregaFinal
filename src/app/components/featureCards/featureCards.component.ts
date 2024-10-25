@@ -12,26 +12,7 @@ interface Service {
   selector: 'app-featureCards',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <section class="py-16 bg-white">
-      <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center text-purple-900 mb-12">Descubre MockVest</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div *ngFor="let service of services; let i = index" 
-               class="bg-purple-50 rounded-lg shadow-lg p-6 transform transition duration-500 hover:scale-105"
-               [@fadeInOut]="service.state"
-               (mouseenter)="onMouseEnter(i)"
-               (mouseleave)="onMouseLeave(i)">
-            <div class="flex items-center justify-center w-16 h-16 bg-purple-100 text-purple-600 rounded-full mb-4">
-              <i [class]="service.icon + ' text-2xl'"></i>
-            </div>
-            <h3 class="text-xl font-semibold text-purple-900 mb-2">{{ service.title }}</h3>
-            <p class="text-gray-700">{{ service.description }}</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  `,
+  templateUrl:'./featureCards.component.html',
   styles: [`
     @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css');
   `],
