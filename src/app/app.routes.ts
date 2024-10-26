@@ -1,26 +1,33 @@
 import { Routes } from '@angular/router';
-import { WelcomeComponent } from './components/welcome/welcome.component';
+import { AuthGuard } from '@auth0/auth0-angular';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { GlossaryComponent } from './components/glossary/glossary.component';
-import { AuthGuard } from '@auth0/auth0-angular';
 import { HomeComponent } from './components/home/home.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
+import { QuotesComponent } from './components/quotes/quotes.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 export const routes: Routes = [
-  { path: '', 
+  {
+    path: '',
     redirectTo: 'welcome',
-    pathMatch: 'full' },
-  { path: 'welcome',
-    component: WelcomeComponent },
-  { path: 'glossary',
-    component: GlossaryComponent },
-  { 
-    path: 'dashboard', 
+    pathMatch: 'full'
+  },
+  {
+    path: 'welcome',
+    component: WelcomeComponent
+  },
+  {
+    path: 'glossary',
+    component: GlossaryComponent
+  },
+  {
+    path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard],
-    children:[
+    children: [
       {
-        path : '', 
+        path: '',
         redirectTo: 'home',
         pathMatch: 'full'
       },
@@ -29,7 +36,11 @@ export const routes: Routes = [
         component: HomeComponent,
       },
       {
-        path:'portfolio',
+        path: 'quotes',
+        component: QuotesComponent
+      },
+      {
+        path: 'portfolio',
         component: PortfolioComponent
       }
     ]

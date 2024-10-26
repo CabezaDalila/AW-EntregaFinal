@@ -1,0 +1,69 @@
+<div class="container mx-auto px-4 py-8">
+    <h2 class="text-2xl font-bold mb-4 text-gray-800">Cotizaciónes</h2>
+
+    <div class="mb-4 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <span class="text-gray-700">Mostrar</span>
+            <select class="border rounded px-2 py-1">
+                <option>50</option>
+                <option>100</option>
+                <option>200</option>
+            </select>
+        </div>
+        <input type="text" placeholder="Buscar: Símbolo - Ej: PAMP" class="border rounded px-3 py-1 w-64">
+    </div>
+
+    <div class="overflow-x-auto bg-white shadow-md rounded">
+        <table class="min-w-full table-auto">
+            <thead>
+                <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                    <th class="py-3 px-6 text-left">Símbolo</th>
+                    <th class="py-3 px-6 text-right">Último Operado</th>
+                    <th class="py-3 px-6 text-right">Variación Diaria</th>
+                    <th class="py-3 px-6 text-right">Cantidad Compra</th>
+                    <th class="py-3 px-6 text-right">Precio Compra</th>
+                    <th class="py-3 px-6 text-right">Precio Venta</th>
+                    <th class="py-3 px-6 text-right">Cantidad Venta</th>
+                    <th class="py-3 px-6 text-right">Apertura</th>
+                    <!-- <th class="py-3 px-6 text-right">Mínimo</th>
+                    <th class="py-3 px-6 text-right">Máximo</th>
+                    <th class="py-3 px-6 text-right">Último Cierre</th>
+                    <th class="py-3 px-6 text-right">Monto Operado</th> -->
+                    <th class="py-3 px-6 text-center">Acción</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-600 text-sm font-light">
+                <tr *ngFor="let accion of acciones" class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6 text-left whitespace-nowrap">
+                        <div class="flex items-center">
+                            <span class="font-medium">{{ accion.simbolo }}</span>
+                        </div>
+                    </td>
+                    <td class="py-3 px-6 text-right">{{ accion.ultimoOperado | number:'1.2-2' }}</td>
+                    <td class="py-3 px-6 text-right"
+                        [ngClass]="{'text-green-600': accion.variacionDiaria > 0, 'text-red-600': accion.variacionDiaria < 0}">
+                        <div class="flex items-center justify-end">
+                            <span *ngIf="accion.variacionDiaria > 0" class="mr-1">▲</span>
+                            <span *ngIf="accion.variacionDiaria < 0" class="mr-1">▼</span>
+                            {{ accion.variacionDiaria | number:'1.2-2' }}%
+                        </div>
+                    </td>
+                    <td class="py-3 px-6 text-right">{{ accion.cantidadCompra }}</td>
+                    <td class="py-3 px-6 text-right">{{ accion.precioCompra | number:'1.2-2' }}</td>
+                    <td class="py-3 px-6 text-right">{{ accion.precioVenta | number:'1.2-2' }}</td>
+                    <td class="py-3 px-6 text-right">{{ accion.cantidadVenta }}</td>
+                    <td class="py-3 px-6 text-right">{{ accion.apertura | number:'1.2-2' }}</td>
+                    <!-- <td class="py-3 px-6 text-right">{{ accion.minimo | number:'1.2-2' }}</td>
+                    <td class="py-3 px-6 text-right">{{ accion.maximo | number:'1.2-2' }}</td>
+                    <td class="py-3 px-6 text-right">{{ accion.ultimoCierre | number:'1.2-2' }}</td>
+                    <td class="py-3 px-6 text-right">{{ accion.montoOperado | number:'1.2-2' }}</td> -->
+                    <td class="py-3 px-6 text-center">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
+                            Comprar
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

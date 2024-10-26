@@ -1,4 +1,4 @@
-<div class="h-[100vh] flex flex-col">
+<!-- <div class="h-[100vh] flex flex-col">
     <div class="h-[90px]">
         <app-header></app-header>
     </div>
@@ -6,6 +6,19 @@
         <app-side-bar></app-side-bar>
         <div class="flex-1 p-4">
             <router-outlet></router-outlet>
+        </div>
+    </div>
+</div> -->
+<div class="h-screen flex flex-col">
+    <div class="h-[90px]">
+        <app-header></app-header>
+    </div>
+    <div class="flex flex-1 overflow-hidden">
+        <app-side-bar></app-side-bar>
+        <div class="flex-1 overflow-auto">
+            <div class="max-w-full p-4">
+                <router-outlet></router-outlet>
+            </div>
         </div>
     </div>
 </div>
