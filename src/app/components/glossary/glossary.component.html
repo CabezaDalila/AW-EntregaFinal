@@ -1,1 +1,77 @@
 
+<div class="min-h-screen bg-gradient-to-br from-purple-100 to-white">
+    <app-header></app-header>
+    <div class="container mx-auto px-4 py-16">
+      <h1 class="text-4xl font-bold text-center text-purple-900 mb-4 mt-16">Glosario Financiero</h1>
+      <p class="text-center text-gray-600 mb-8">Explora términos financieros clave para mejorar tu comprensión del mundo de las inversiones.</p>
+      
+      <!-- Search Bar -->
+      <div class="mb-8">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="filterTerms()"
+          placeholder="Buscar término..."
+          class="w-full px-4 py-2 rounded-full border-2 border-purple-300 focus:outline-none focus:border-purple-500"
+        />
+      </div>
+
+      <!-- Category Tabs -->
+      <div class="flex flex-wrap justify-center mb-8">
+        <button
+          *ngFor="let category of categories"
+          (click)="selectCategory(category)"
+          [class.bg-purple-600]="selectedCategory === category"
+          [class.text-white]="selectedCategory === category"
+          class="px-4 py-2 m-1 rounded-full bg-purple-200 text-purple-800 hover:bg-purple-300 transition duration-300"
+        >
+          {{ category }}
+        </button>
+      </div>
+
+      <!-- Alphabetical Index -->
+      <div class="flex flex-wrap justify-center mb-8">
+        <button
+          *ngFor="let letter of alphabet"
+          (click)="selectLetter(letter)"
+          [class.bg-purple-600]="selectedLetter === letter"
+          [class.text-white]="selectedLetter === letter"
+          class="px-3 py-1 m-1 rounded-full bg-purple-200 text-purple-800 hover:bg-purple-300 transition duration-300"
+        >
+          {{ letter }}
+        </button>
+      </div>
+
+      <!-- Glossary Terms -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          *ngFor="let term of filteredTerms"
+          class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
+        >
+          <div
+            (click)="toggleTerm(term.id)"
+            class="cursor-pointer p-4 bg-purple-100 flex justify-between items-center"
+          >
+            <h3 class="text-lg font-semibold text-purple-900">{{ term.term }}</h3>
+            <svg
+              [class.rotate-180]="expandedTermId === term.id"
+              class="w-5 h-5 text-purple-600 transition-transform duration-300"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+          <div
+            *ngIf="expandedTermId === term.id"
+            [@expandCollapse]="expandedTermId === term.id ? 'expanded' : 'collapsed'"
+            class="p-4 bg-white"
+          >
+            <p class="text-gray-700">{{ term.definition }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-footer></app-footer> 
+  </div>

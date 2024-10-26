@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd, Event } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { AuthService } from '@auth0/auth0-angular';
 import { filter, Subscription } from 'rxjs';
 
 @Component({
@@ -16,14 +15,14 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'Auth0';
   private routerSubscription: Subscription | undefined;
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.auth.isAuthenticated$.subscribe(isAuthenticated => {
-      if(isAuthenticated) {
-        this.router.navigate(['/dashboard']);
-      }
-    });
+    // this.auth.isAuthenticated$.subscribe(isAuthenticated => {
+    //   if(isAuthenticated) {
+    //     // this.router.navigate(['/dashboard']);
+    //   }
+    // });
 
     this.routerSubscription = this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
@@ -38,9 +37,5 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe();
     }
-  }
-
-  login() {
-    this.auth.loginWithRedirect();
   }
 }

@@ -1,0 +1,26 @@
+<div class="flex flex-col w-64 h-full bg-white text-black p-4 shadow-lg ">
+    <div class="flex flex-col space-y-4">
+        <a routerLink="dashboard/home" class="flex items-center space-x-2 p-2 rounded hover:bg-gray-200">
+            <img src="../../../assets/icons/home.png" alt="dashboard" class="w-6 h-6">
+            <span>Dashboard</span>
+        </a>
+        <a routerLink="dashboard/quotes" class="flex items-center space-x-2 p-2 rounded hover:bg-gray-200">
+            <img src="../../../assets/icons/stock.png" alt="quotes" class="w-6 h-6">
+            <span>Quotes</span>
+        </a>
+        <a routerLink="dashboard/portfolio" class="flex items-center space-x-2 p-2 rounded hover:bg-gray-200">
+            <img src="../../../assets/icons/folder.png" alt="folder" class="w-6 h-6">
+            <span>Portfolio</span>
+        </a>
+    </div>
+    <div class="mt-auto flex items-center gap-2 ">
+        @if(this.userName){
+        <img [src]="this.userPicture" alt="user" class="w-10 h-10 rounded-full">
+        <p>{{this.userName}}</p>
+        }
+        @else {
+        <img src="../../../assets/icons/user.png" alt="user" class="w-10 h-10 rounded-full">
+        <p>UserName</p>
+        }
+    </div>
+</div>
