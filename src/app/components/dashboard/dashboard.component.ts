@@ -5,16 +5,12 @@ import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { ApiPolygonService } from '../../Services/api-polygon.service';
 import { HeaderComponent } from '../../components/header/header.component';
-import { CryptoComponent } from '../crypto/crypto.component';
-import { IndexComponent } from '../index/index.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
-import { StocksComponent } from '../stocks/stocks.component';
-
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HeaderComponent, SideBarComponent, RouterModule, RouterOutlet, StocksComponent, CryptoComponent, IndexComponent],
+  imports: [CommonModule, ReactiveFormsModule, HeaderComponent, SideBarComponent, RouterModule, RouterOutlet],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   providers: [ApiPolygonService]
