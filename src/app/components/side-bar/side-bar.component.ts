@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
-import { Observable, Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-side-bar',
@@ -11,14 +10,18 @@ import { Observable, Subscriber } from 'rxjs';
   styleUrl: './side-bar.component.scss'
 })
 export class SideBarComponent implements OnInit {
-userName?:string ='';
-userPicture?:string='';
+  userName?: string = '';
+  userPicture?: string = '';
 
-constructor(public auth: AuthService){
- }
- ngOnInit(): void {
-   this.auth.user$.subscribe((user)=> {this.userName=user?.name; this.userPicture=user?.picture});  
- }
- 
+  constructor(public auth: AuthService) {
+  }
+  ngOnInit(): void {
+    this.auth.user$.subscribe((user) => { this.userName = user?.name; this.userPicture = user?.picture });
+  }
+  isOpen = true;
+
+  toggleSidebar() {
+    this.isOpen = !this.isOpen;
+  }
 }
 
