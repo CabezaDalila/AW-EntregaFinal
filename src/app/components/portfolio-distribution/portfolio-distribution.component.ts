@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -122,6 +122,13 @@ export class PortfolioDistributionComponent {
     if (!this.showTransactionsModal) {
       this.expandedTransactionId = null;
       this.resetFilters();
+    }
+  }
+
+  closeModal(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (target.classList.contains('modal-backdrop')) {
+      this.toggleTransactionsModal();
     }
   }
 

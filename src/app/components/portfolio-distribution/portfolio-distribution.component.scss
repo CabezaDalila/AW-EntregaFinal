@@ -1,4 +1,8 @@
-.modal-overlay {
+.modal-container {
+    isolation: isolate;
+  }
+  
+  .modal-overlay {
     backdrop-filter: blur(4px);
   }
   
