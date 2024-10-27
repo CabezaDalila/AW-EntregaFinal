@@ -3,13 +3,5 @@
 @tailwind utilities;
 
 
-body {
-    min-height: 100vh;
-    margin: 0;
-    font-family: Arial, sans-serif;
-    color: white;
-    background-color:white;
-}
+
 /* Tus estilos personalizados pueden ir aquí */
-
-
