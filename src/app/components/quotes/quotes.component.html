@@ -9,6 +9,7 @@
                 <option>100</option>
                 <option>200</option>
             </select>
+
         </div>
         <input type="text" placeholder="Buscar: Símbolo - Ej: PAMP" class="border rounded px-3 py-1 w-64">
     </div>
@@ -29,30 +30,30 @@
                     <th class="py-3 px-6 text-right">Máximo</th>
                     <th class="py-3 px-6 text-right">Último Cierre</th>
                     <th class="py-3 px-6 text-right">Monto Operado</th> -->
-                    <th class="py-3 px-6 text-center">Acción</th>
+                    <th class="py-3 px-6 text-center">Stocks</th>
                 </tr>
             </thead>
             <tbody class="text-gray-600 text-sm font-light">
-                <tr *ngFor="let accion of acciones" class="border-b border-gray-200 hover:bg-gray-100">
+                <tr *ngFor="let stock of stocks" class="border-b border-gray-200 hover:bg-gray-100">
                     <td class="py-3 px-6 text-left whitespace-nowrap">
                         <div class="flex items-center">
-                            <span class="font-medium">{{ accion.simbolo }}</span>
+                            <span class="font-medium">{{ stock.simbolo }}</span>
                         </div>
                     </td>
-                    <td class="py-3 px-6 text-right">{{ accion.ultimoOperado | number:'1.2-2' }}</td>
+                    <td class="py-3 px-6 text-right">{{ stock.ultimoOperado | number:'1.2-2' }}</td>
                     <td class="py-3 px-6 text-right"
-                        [ngClass]="{'text-green-600': accion.variacionDiaria > 0, 'text-red-600': accion.variacionDiaria < 0}">
+                        [ngClass]="{'text-green-600': stock.variacionDiaria > 0, 'text-red-600': stock.variacionDiaria < 0}">
                         <div class="flex items-center justify-end">
-                            <span *ngIf="accion.variacionDiaria > 0" class="mr-1">▲</span>
-                            <span *ngIf="accion.variacionDiaria < 0" class="mr-1">▼</span>
-                            {{ accion.variacionDiaria | number:'1.2-2' }}%
+                            <span *ngIf="stock.variacionDiaria > 0" class="mr-1">▲</span>
+                            <span *ngIf="stock.variacionDiaria < 0" class="mr-1">▼</span>
+                            {{ stock.variacionDiaria | number:'1.2-2' }}%
                         </div>
                     </td>
-                    <td class="py-3 px-6 text-right">{{ accion.cantidadCompra }}</td>
-                    <td class="py-3 px-6 text-right">{{ accion.precioCompra | number:'1.2-2' }}</td>
-                    <td class="py-3 px-6 text-right">{{ accion.precioVenta | number:'1.2-2' }}</td>
-                    <td class="py-3 px-6 text-right">{{ accion.cantidadVenta }}</td>
-                    <td class="py-3 px-6 text-right">{{ accion.apertura | number:'1.2-2' }}</td>
+                    <td class="py-3 px-6 text-right">{{ stock.cantidadCompra }}</td>
+                    <td class="py-3 px-6 text-right">{{ stock.precioCompra | number:'1.2-2' }}</td>
+                    <td class="py-3 px-6 text-right">{{ stock.precioVenta | number:'1.2-2' }}</td>
+                    <td class="py-3 px-6 text-right">{{ stock.cantidadVenta }}</td>
+                    <td class="py-3 px-6 text-right">{{ stock.apertura | number:'1.2-2' }}</td>
                     <!-- <td class="py-3 px-6 text-right">{{ accion.minimo | number:'1.2-2' }}</td>
                     <td class="py-3 px-6 text-right">{{ accion.maximo | number:'1.2-2' }}</td>
                     <td class="py-3 px-6 text-right">{{ accion.ultimoCierre | number:'1.2-2' }}</td>
