@@ -1,11 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-interface Asset {
-  symbol: string;
-  price: number;
-  change: number;
-}
+import { ApiPolygonService } from '../../Services/api-polygon.service';
 @Component({
   selector: 'app-cotizaciones-principales',
   standalone: true,
@@ -14,33 +10,36 @@ interface Asset {
   styleUrl: './cotizaciones-principales.component.scss',
 })
 export class CotizacionesPrincipalesComponent implements OnInit {
-  assets: Asset[] = [];
+  stocks: { [key: string]: number | null } = {};
+  symbols: string[] = [];
+  prices: number[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private apiPolygon: ApiPolygonService
+  ) {}
 
   ngOnInit() {
-    this.fetchAssetData();
+    this.getStockPrices(['KO', 'AAPL', 'MSFT', 'AMZN', 'GOOGL', 'TSLA']);
   }
 
-  fetchAssetData() {
-    // Replace these URLs with your actual API endpoints
-    const apiUrls = [
-      'https://api.example.com/eurusd',
-      'https://api.example.com/oil',
-      'https://api.example.com/spx500',
-      'https://api.example.com/dj30',
-      'https://api.example.com/nasdaq100',
-    ];
-
-    apiUrls.forEach((url) => {
-      this.http.get<Asset>(url).subscribe(
+  getStockPrices(symbols: string[]) {
+    symbols.forEach((symbol, index) => {
+      this.apiPolygon.getStockPreviousClose(symbol).subscribe(
         (data) => {
-          this.assets.push(data);
+          const price = data.results[0].c;
+          this.symbols[index] = symbol;
+          this.prices[index] = price;
+          console.log(this.symbols, this.prices);
         },
         (error) => {
-          console.error('Error fetching asset data:', error);
+          console.error(`Error fetching data for ${symbol}`, error);
         }
       );
     });
+  }
+
+  formatPrice(price: number | null): string {
+    return price !== null ? price.toFixed(2) : 'N/A';
   }
 }
