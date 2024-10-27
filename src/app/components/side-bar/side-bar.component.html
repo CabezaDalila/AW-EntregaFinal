@@ -1,34 +1,35 @@
 <div class="relative h-full">
-    <button (click)="toggleSidebar()"
-        class=" top-4 -right-3 bg-white rounded-full p-1 shadow-md z-10 w-8 h-8 flex items-center justify-center"
-        aria-label="Toggle sidebar">
-        <img [src]="isOpen ? '../../../assets/icons/left-arrow.png' : '../../../assets/icons/right-arrow.png'"
-            alt="Toggle sidebar" class="w-6 h-6">
-    </button>
-    <div class="flex flex-col w-64 h-full bg-white text-black p-4 shadow-lg transition-all duration-300 ease-in-out"
-        [class.translate-x-0]="isOpen" [class.-translate-x-full]="!isOpen">
-        <div class="flex flex-col space-y-4">
-            <a routerLink="dashboard/home" class="flex items-center space-x-2 p-2 rounded hover:bg-gray-200">
+    <div class="flex flex-col h-full bg-white text-black shadow-lg transition-all duration-300 ease-in-out"
+        [ngClass]="{'w-64': isOpen, 'w-18': !isOpen}">
+        <div class="flex flex-col space-y-4 p-4">
+            <div class="flex justify-end">
+                <button (click)="toggleSidebar()"
+                    class="inline-flex items-center justify-center p-2 rounded hover:bg-gray-200 focus:ring-gray-300 transition-colors duration-200"
+                    aria-label="Toggle sidebar">
+                    <img [src]="isOpen ? '../../../assets/icons/left-arrow.png' : '../../../assets/icons/right-arrow.png'"
+                        alt="Toggle sidebar" class="w-6 h-6">
+                </button>
+            </div>
+            <a [routerLink]="['/dashboard', 'home']"
+                class="flex items-center space-x-2 p-2 rounded hover:bg-gray-200 transition-colors duration-200">
                 <img src="../../../assets/icons/home.png" alt="dashboard" class="w-6 h-6">
-                <span>Dashboard</span>
+                <span [ngClass]="{'hidden': !isOpen}">Dashboard</span>
             </a>
-            <a routerLink="dashboard/quotes" class="flex items-center space-x-2 p-2 rounded hover:bg-gray-200">
+            <a [routerLink]="['/dashboard', 'quotes']"
+                class="flex items-center space-x-2 p-2 rounded hover:bg-gray-200 transition-colors duration-200">
                 <img src="../../../assets/icons/stock.png" alt="quotes" class="w-6 h-6">
-                <span>Quotes</span>
+                <span [ngClass]="{'hidden': !isOpen}">Quotes</span>
             </a>
-            <a routerLink="dashboard/portfolio" class="flex items-center space-x-2 p-2 rounded hover:bg-gray-200">
+            <a [routerLink]="['/dashboard', 'portfolio']"
+                class="flex items-center space-x-2 p-2 rounded hover:bg-gray-200 transition-colors duration-200">
                 <img src="../../../assets/icons/folder.png" alt="folder" class="w-6 h-6">
-                <span>Portfolio</span>
+                <span [ngClass]="{'hidden': !isOpen}">Portfolio</span>
             </a>
         </div>
-        <div class="mt-auto flex items-center gap-2">
-            @if (userName) {
-            <img [src]="userPicture" alt="user" class="w-10 h-10 rounded-full">
-            <p>{{userName}}</p>
-            } @else {
-            <img src="../../../assets/icons/user.png" alt="user" class="w-10 h-10 rounded-full">
-            <p>UserName</p>
-            }
+        <div class="mt-auto flex items-center gap-2 p-4" [ngClass]="{'justify-center': !isOpen}">
+            <img [src]="userName ? userPicture : '../../../assets/icons/user.png'" alt="user"
+                class="w-10 h-10 rounded-full">
+            <p [ngClass]="{'hidden': !isOpen}">{{userName || 'UserName'}}</p>
         </div>
     </div>
 </div>
