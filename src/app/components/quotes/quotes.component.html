@@ -9,7 +9,6 @@
                 <option>100</option>
                 <option>200</option>
             </select>
-
         </div>
         <input type="text" placeholder="Buscar: Símbolo - Ej: PAMP" class="border rounded px-3 py-1 w-64">
     </div>
@@ -18,52 +17,35 @@
         <table class="min-w-full table-auto">
             <thead>
                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                    <th class="py-3 px-6 text-left">Símbolo</th>
-                    <th class="py-3 px-6 text-right">Último Operado</th>
-                    <th class="py-3 px-6 text-right">Variación Diaria</th>
-                    <th class="py-3 px-6 text-right">Cantidad Compra</th>
-                    <th class="py-3 px-6 text-right">Precio Compra</th>
-                    <th class="py-3 px-6 text-right">Precio Venta</th>
-                    <th class="py-3 px-6 text-right">Cantidad Venta</th>
-                    <th class="py-3 px-6 text-right">Apertura</th>
-                    <!-- <th class="py-3 px-6 text-right">Mínimo</th>
-                    <th class="py-3 px-6 text-right">Máximo</th>
-                    <th class="py-3 px-6 text-right">Último Cierre</th>
-                    <th class="py-3 px-6 text-right">Monto Operado</th> -->
+                    <th class="py-3 px-6 text-left">Symbol</th>
+                    <th class="py-3 px-6 text-right">Close Price</th>
+                    <th class="py-3 px-6 text-right">highest price</th>
+                    <th class="py-3 px-6 text-right">Lowest price</th>
+                    <th class="py-3 px-6 text-right">Number of transactions</th>
+                    <th class="py-3 px-6 text-right">Open price</th>
                     <th class="py-3 px-6 text-center">Stocks</th>
                 </tr>
             </thead>
             <tbody class="text-gray-600 text-sm font-light">
-                <tr *ngFor="let stock of stocks" class="border-b border-gray-200 hover:bg-gray-100">
+                @for(stock of this.stocksData ; track stock.T ){
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
                     <td class="py-3 px-6 text-left whitespace-nowrap">
                         <div class="flex items-center">
-                            <span class="font-medium">{{ stock.simbolo }}</span>
+                            <span class="font-medium">{{ stock.T}}</span>
                         </div>
                     </td>
-                    <td class="py-3 px-6 text-right">{{ stock.ultimoOperado | number:'1.2-2' }}</td>
-                    <td class="py-3 px-6 text-right"
-                        [ngClass]="{'text-green-600': stock.variacionDiaria > 0, 'text-red-600': stock.variacionDiaria < 0}">
-                        <div class="flex items-center justify-end">
-                            <span *ngIf="stock.variacionDiaria > 0" class="mr-1">▲</span>
-                            <span *ngIf="stock.variacionDiaria < 0" class="mr-1">▼</span>
-                            {{ stock.variacionDiaria | number:'1.2-2' }}%
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-right">{{ stock.cantidadCompra }}</td>
-                    <td class="py-3 px-6 text-right">{{ stock.precioCompra | number:'1.2-2' }}</td>
-                    <td class="py-3 px-6 text-right">{{ stock.precioVenta | number:'1.2-2' }}</td>
-                    <td class="py-3 px-6 text-right">{{ stock.cantidadVenta }}</td>
-                    <td class="py-3 px-6 text-right">{{ stock.apertura | number:'1.2-2' }}</td>
-                    <!-- <td class="py-3 px-6 text-right">{{ accion.minimo | number:'1.2-2' }}</td>
-                    <td class="py-3 px-6 text-right">{{ accion.maximo | number:'1.2-2' }}</td>
-                    <td class="py-3 px-6 text-right">{{ accion.ultimoCierre | number:'1.2-2' }}</td>
-                    <td class="py-3 px-6 text-right">{{ accion.montoOperado | number:'1.2-2' }}</td> -->
+                    <td class="py-3 px-6 text-right">{{ stock.c}}</td>
+                    <td class="py-3 px-6 text-right">{{stock.h}}</td>
+                    <td class="py-3 px-6 text-right">{{ stock.l }}</td>
+                    <td class="py-3 px-6 text-right">{{ stock.n }}</td>
+                    <td class="py-3 px-6 text-right">{{ stock.n }}</td>
                     <td class="py-3 px-6 text-center">
                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
                             Comprar
                         </button>
                     </td>
                 </tr>
+                }
             </tbody>
         </table>
     </div>

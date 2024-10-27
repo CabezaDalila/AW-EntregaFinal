@@ -45,21 +45,4 @@ export class DashboardComponent implements OnInit {
     this.auth.logout({ logoutParams: { returnTo: window.location.origin } });
   }
 
-  getStockData() {
-    if (this.stockForm.valid) {
-      const { ticker, startDate, endDate } = this.stockForm.value;
-      this.apiPolygon.getStockData(ticker, startDate, endDate).subscribe(
-        (data) => {
-          this.stockData = data; // Almacenar los datos para mostrarlos en la vista
-          console.log(this.stockData);
-        },
-        (error) => {
-          console.error('Error fetching stock data', error);
-        }
-      );
-    } else {
-      console.log('Formulario no es válido');
-    }
-  }
-
 }

@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { ApiPolygonService } from '../../Services/api-polygon.service';
-import { Iaccion } from '../../interfaces/Iaccion';
+import { IDailyStocksResponse } from '../../interfaces/IdailyStocks';
+import { formatYYYYMMDD } from '../../shared/utils/date.utility';
 
 @Component({
   selector: 'app-quotes',
@@ -12,33 +13,27 @@ import { Iaccion } from '../../interfaces/Iaccion';
 })
 
 export class QuotesComponent implements OnInit {
-  stocks: Iaccion[] = [];
+  stocksData?: IDailyStocksResponse['results'];
   stockServices = inject(ApiPolygonService);
-  ticker: string = 'AAPL';
-  date = new Date();
+  constructor(private apiPolygon: ApiPolygonService) { }
 
-  day = (this.date.getDate() - 1).toString();
-  day2 = (this.date.getDate() - 2).toString()
-  month = (this.date.getMonth() + 1).toString();
-  year = this.date.getFullYear()
-  dateYesterday = `${this.year}-${this.month}-${this.day}`;
-  dateYesterday2 = `${this.year}-${this.month}-${this.day2}`;
-  constructor(private apiPolygon: ApiPolygonService) {
-
-  }
   ngOnInit(): void {
-    this.getStockData();
+    this.getDailyStock();
   }
-  getStockData() {
-    this.apiPolygon.getStockData(this.ticker, this.dateYesterday, this.dateYesterday2).subscribe(
+
+  getDailyStock() {
+    const date = new Date();
+    date.setDate(date.getDate() - 3);
+    const todayFormatted = formatYYYYMMDD(date);
+    console.log(todayFormatted);
+    this.apiPolygon.getDailyStocks(todayFormatted).subscribe(
       (data) => {
-        this.stocks = data;
-        console.log(this.stocks);//me tira error por consola
+        const results = data.results.slice(0, 9);
+        this.stocksData = results;
+        console.log(this.stocksData);
       }, (error) => {
-        console.error(`Error fetching data for ${this.ticker}`, error);
+        console.error(`Error fetching data`, error);
       }
     );
   }
-
-
 }
