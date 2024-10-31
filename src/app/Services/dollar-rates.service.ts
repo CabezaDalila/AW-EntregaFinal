@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, forkJoin, map } from 'rxjs';
 import { DollarRate } from '../interfaces/dollar-rate.interface';
 
 interface ApiDollarRate {
@@ -20,13 +20,28 @@ export class DollarRatesService {
   constructor(private http: HttpClient) {}
 
   getDollarRates(): Observable<DollarRate[]> {
-    return this.http.get<ApiDollarRate[]>(this.apiUrl).pipe(
-      map(rates => rates.map(rate => ({
-        ...rate,
-        compra: parseFloat(rate.compra),
-        venta: parseFloat(rate.venta),
-        fechaActualizacion: new Date(rate.fechaActualizacion)
-      })))
+    const mainRates = this.http.get<ApiDollarRate[]>(this.apiUrl);
+    const cclRate = this.http.get<ApiDollarRate>(`${this.apiUrl}/contadoconliqui`);
+
+    return forkJoin({
+      main: mainRates,
+      ccl: cclRate
+    }).pipe(
+      map(({ main, ccl }) => {
+        const allRates = [...main, ccl];
+        return allRates.map(rate => this.transformApiRate(rate));
+      })
     );
+  }
+
+  private transformApiRate(apiRate: ApiDollarRate): DollarRate {
+    return {
+      casa: apiRate.casa,
+      nombre: apiRate.nombre,
+      compra: parseFloat(apiRate.compra),
+      venta: parseFloat(apiRate.venta),
+      fechaActualizacion: new Date(apiRate.fechaActualizacion),
+      variacion: undefined // Se puede calcular más tarde si es necesario
+    };
   }
 }

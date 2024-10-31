@@ -1,3 +1,24 @@
-.bg-gray-50 {
-    transition: background-color 0.2s ease-in-out;
+.bg-gradient-to-br {
+  background-size: 200% 200%;
+  animation: gradient 5s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
   }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.shadow-sm {
+  transition: all 0.3s ease;
+}
+
+.hover\:shadow-md:hover {
+  transform: translateY(-2px);
+}

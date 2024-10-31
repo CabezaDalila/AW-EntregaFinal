@@ -4,4 +4,5 @@ export interface DollarRate {
   compra: number;
   venta: number;
   fechaActualizacion: Date;
+  variacion?: number;
 }
