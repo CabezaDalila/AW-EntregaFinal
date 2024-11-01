@@ -1,0 +1,96 @@
+<div class="bg-white rounded-xl shadow-lg p-6">
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h2 class="text-xl font-bold text-gray-800">Cotización del Dólar</h2>
+      <p class="text-sm text-gray-600">Valores actualizados del mercado</p>
+    </div>
+    <button 
+      (click)="loadDollarRates()" 
+      [disabled]="updating"
+      class="relative flex items-center space-x-2 px-4 py-2 bg-primary-100 hover:bg-primary-200 rounded-lg transition-all duration-300 overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        class="h-5 w-5 text-primary-600 relative z-10 transition-transform duration-700 ease-in-out" 
+        [ngClass]="{'animate-spin': updating}"
+        fill="none" 
+        viewBox="0 0 24 24" 
+        stroke="currentColor"
+      >
+        <path 
+          stroke-linecap="round" 
+          stroke-linejoin="round" 
+          stroke-width="2" 
+          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" 
+        />
+      </svg>
+      <span class="text-primary-600 font-medium relative z-10">
+        Actualizar
+      </span>
+    </button>
+  </div>
+
+  <div class="flex justify-center items-center py-12" *ngIf="!dollarRates.length && loading">
+    <div class="flex flex-col items-center">
+      <div class="animate-spin rounded-full h-12 w-12 border-4 border-primary-200 border-t-primary-600"></div>
+      <p class="mt-4">Cargando cotizaciones...</p>
+    </div>
+  </div>
+
+  <div class="bg-red-50 border border-red-200 text-red-600 p-6 rounded-xl text-center" *ngIf="error">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <p>{{error}}</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="bg-gradient-to-br from-gray-50 to-white rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100" 
+         *ngFor="let rate of dollarRates">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center space-x-3">
+          <div class="p-2 bg-primary-100 rounded-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="getIconForRate(getRateDisplayName(rate))" />
+            </svg>
+          </div>
+          <h3 class="font-semibold text-gray-800">{{getRateDisplayName(rate)}}</h3>
+        </div>
+        <div class="flex items-center" *ngIf="rate.variacion !== undefined">
+          <svg xmlns="http://www.w3.org/2000/svg" 
+               [class]="getVariationClass(rate.variacion)"
+               class="h-5 w-5" 
+               fill="none" 
+               viewBox="0 0 24 24" 
+               stroke="currentColor">
+            <path stroke-linecap="round" 
+                  stroke-linejoin="round" 
+                  stroke-width="2" 
+                  [attr.d]="getVariationIcon(rate.variacion)" />
+          </svg>
+          <span [class]="getVariationClass(rate.variacion)" class="ml-1 text-sm">
+            {{rate.variacion > 0 ? '+' : ''}}{{rate.variacion | number:'1.2-2'}}%
+          </span>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <div class="flex justify-between items-center p-2 bg-gray-50 rounded-lg">
+          <span class="text-sm font-medium text-gray-600">Compra</span>
+          <span class="text-lg font-bold text-gray-800">${{rate.compra | number:'1.2-2'}}</span>
+        </div>
+
+        <div class="flex justify-between items-center p-2 bg-gray-50 rounded-lg">
+          <span class="text-sm font-medium text-gray-600">Venta</span>
+          <span class="text-lg font-bold text-gray-800">${{rate.venta | number:'1.2-2'}}</span>
+        </div>
+      </div>
+
+      <div class="mt-4 text-right">
+        <span class="text-xs text-gray-400">
+          Actualizado: {{rate.fechaActualizacion | date:'short'}}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
