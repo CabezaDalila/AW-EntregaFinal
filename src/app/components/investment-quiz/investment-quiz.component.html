@@ -1,0 +1,75 @@
+<div class="max-w-4xl mx-auto p-6">
+  <div class="bg-white rounded-2xl shadow-lg overflow-hidden" @fadeSlide>
+    <!-- Quiz Header -->
+    <div class="bg-gradient-to-r from-primary-700 to-primary-600 p-8 text-white">
+      <h2 class="text-3xl font-light mb-2">Quiz de Inversiones MockVest</h2>
+      <p class="text-primary-100">Pon a prueba tus conocimientos financieros</p>
+    </div>
+
+    <!-- Quiz Content -->
+    <div *ngIf="!quizCompleted" class="p-8">
+      <!-- Progress Bar -->
+      <div class="mb-8">
+        <div class="h-1.5 bg-primary-100 rounded-full overflow-hidden">
+          <div class="h-full bg-primary-500 transition-all duration-500 ease-out"
+               [style.width]="getProgressPercentage() + '%'">
+          </div>
+        </div>
+        <div class="flex justify-between mt-2 text-sm text-primary-700">
+          <span>Pregunta {{currentQuestion + 1}} de {{quizQuestions.length}}</span>
+          <span>{{getProgressPercentage()}}% completado</span>
+        </div>
+      </div>
+
+      <!-- Question -->
+      <div class="mb-8">
+        <h3 class="text-2xl text-primary-900 font-medium mb-6">
+          {{quizQuestions[currentQuestion].text}}
+        </h3>
+      </div>
+
+      <!-- Options -->
+      <div class="space-y-4">
+        <button *ngFor="let option of quizQuestions[currentQuestion].options; let i = index"
+                (click)="handleAnswerSelection(i)"
+                class="w-full p-4 text-left rounded-xl border-2 transition-all duration-200 hover:border-primary-300 focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:outline-none"
+                [class.border-primary-100]="selectedAnswer !== i"
+                [class.border-primary-500]="selectedAnswer === i"
+                [class.bg-primary-50]="selectedAnswer === i"
+                [class.text-primary-900]="selectedAnswer === i"
+                [class.text-gray-700]="selectedAnswer !== i">
+          {{option}}
+        </button>
+      </div>
+
+      <!-- Next Button -->
+      <button (click)="handleNextQuestion()"
+              [disabled]="selectedAnswer === null"
+              class="w-full mt-8 py-4 rounded-xl font-medium transition-all duration-200 focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:outline-none"
+              [ngClass]="{
+                'bg-primary-500 hover:bg-primary-600 text-white': selectedAnswer !== null,
+                'bg-primary-200 cursor-not-allowed text-primary-400': selectedAnswer === null
+              }">
+        {{currentQuestion === quizQuestions.length - 1 ? 'Finalizar' : 'Siguiente'}}
+      </button>
+    </div>
+
+    <!-- Results -->
+    <div *ngIf="quizCompleted" class="p-8 text-center" @fadeSlide>
+      <div class="mb-8">
+        <div class="inline-flex items-center justify-center w-32 h-32 rounded-full bg-primary-50 border-4 border-primary-200">
+          <span class="text-4xl font-light text-primary-700">
+            {{(score / quizQuestions.length * 100) | number:'1.0-0'}}%
+          </span>
+        </div>
+      </div>
+      
+      <h3 class="text-2xl text-primary-900 font-light mb-6">{{getResultMessage()}}</h3>
+      
+      <button (click)="resetQuiz()"
+              class="px-8 py-3 bg-primary-500 text-white rounded-xl hover:bg-primary-600 transition-colors focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:outline-none">
+        Reintentar Quiz
+      </button>
+    </div>
+  </div>
+</div>

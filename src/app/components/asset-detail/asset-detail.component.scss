@@ -1,0 +1,54 @@
+.chart-container {
+  position: relative;
+  height: 400px;
+  width: 100%;
+}
+
+/* Responsive adjustments for small screens */
+@media (max-width: 640px) {
+  .chart-container {
+    height: 300px;
+  }
+}
+
+/* Smooth transitions */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Button hover effects */
+button {
+  transition: all 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Watchlist button animation */
+.watchlist-button {
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+  
+  &.active {
+    animation: pulse 1s;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
