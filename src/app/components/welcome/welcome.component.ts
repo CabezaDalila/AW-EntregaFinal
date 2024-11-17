@@ -5,14 +5,14 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 import { HeroComponent } from '../hero/hero.component';
 import { FeatureCards } from '../featureCards/featureCards.component';
-import { TestimonialsComponent } from '../testimonials/testimonials.component';
 import { FooterComponent } from '../footer/footer.component';
+import { InvestmentQuizComponent } from '../investment-quiz/investment-quiz.component';
 
 
 @Component({
   selector: 'app-welcome',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, HeroComponent, FeatureCards, TestimonialsComponent,FooterComponent],
+  imports: [CommonModule, HeaderComponent, HeroComponent, FeatureCards,FooterComponent, InvestmentQuizComponent],
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.scss']
 })

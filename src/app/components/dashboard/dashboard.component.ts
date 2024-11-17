@@ -6,11 +6,12 @@ import { AuthService } from '@auth0/auth0-angular';
 import { ApiPolygonService } from '../../Services/api-polygon.service';
 import { HeaderComponent } from '../../components/header/header.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HeaderComponent, SideBarComponent, RouterModule, RouterOutlet],
+  imports: [CommonModule, ReactiveFormsModule, HeaderComponent, SideBarComponent, RouterModule, RouterOutlet,FooterComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   providers: [ApiPolygonService]
