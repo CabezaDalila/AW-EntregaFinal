@@ -1,14 +1,14 @@
-export interface Stock {
+export interface IStockDetailResponse {
   adjusted: boolean;
   next_url: string;
   queryCount: number;
   request_id: string;
-  results: Result[];
+  results: IStock[];
   resultsCount: number;
   status: string;
   ticker: string;
 }
-export interface Result {
+export interface IStock {
   c: number;
   h: number;
   l: number;
