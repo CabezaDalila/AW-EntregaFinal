@@ -2,12 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { PruebaSupabaseService } from '../../Services/prueba-supabase.service';
 import { FeatureCards } from '../featureCards/featureCards.component';
 import { FooterComponent } from '../footer/footer.component';
 import { HeaderComponent } from '../header/header.component';
 import { HeroComponent } from '../hero/hero.component';
 import { InvestmentQuizComponent } from '../investment-quiz/investment-quiz.component';
+
 
 
 @Component({
@@ -18,16 +18,13 @@ import { InvestmentQuizComponent } from '../investment-quiz/investment-quiz.comp
   styleUrls: ['./welcome.component.scss']
 })
 export class WelcomeComponent implements OnInit {
-  constructor(private auth: AuthService, private router: Router, private prueba:PruebaSupabaseService) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.auth.isAuthenticated$.subscribe(isAuthenticated => {
       if(isAuthenticated) {
         this.router.navigate(['/dashboard'])
       }
-    })
-    this.prueba.pruebaSupabase().then((data)=>{
-      console.log(data);
     })
   }
 

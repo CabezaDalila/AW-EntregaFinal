@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PruebaSupabaseService } from './prueba-supabase.service';
+import { PruebaSupabaseService } from './supabase.service';
 
 describe('PruebaSupabaseService', () => {
   let service: PruebaSupabaseService;
