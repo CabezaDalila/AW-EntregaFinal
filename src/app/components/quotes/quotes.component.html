@@ -1,4 +1,6 @@
 <div class="container mx-auto px-4 py-8">
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedStock, setSelectedStock] = useState(null);
     <h2 class="text-2xl font-bold mb-4 text-gray-800">Cotizaciones</h2>
 
     <div class="mb-4 flex justify-between items-center">
@@ -38,9 +40,11 @@
               <td class="py-3 px-6 text-right">{{ stock.h }}</td>
               <td class="py-3 px-6 text-right">{{ stock.l }}</td>
               <td class="py-3 px-6 text-right">{{ stock.n }}</td>
-              <td class="px-3 py-6 text-right">
-                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">comprar</a>
-            </td>
+              <td className="px-3 py-6 text-right">
+                <button onClick=togleMenuBuy() className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                  comprar
+                </button>
+              </td>
             </tr>
           </ng-container>
           <ng-template #loadingTemplate>
