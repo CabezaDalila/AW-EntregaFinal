@@ -12,12 +12,12 @@ export class ApiPolygonService {
   constructor(private http: HttpClient) { }
 
   getDetailStock(ticker: string, startDate: string, endDate: string): Observable<IStockDetailResponse> {
-    const url = '${this.baseUrl}${ticker}/range/1/day/${startDate}/${endDate}?apiKey=${this.apiKey}';
+    const url = `${this.baseUrl}${ticker}/range/1/day/${startDate}/${endDate}?apiKey=${this.apiKey}`;
     return this.http.get<IStockDetailResponse>(url);
   }
 
   getDailyStocks(date: string): Observable<IDailyStocksResponse> {
-    const url = 'https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/${date}?apiKey=${this.apiKey}';
+    const url = `https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/${date}?apiKey=${this.apiKey}`;
     return this.http.get<IDailyStocksResponse>(url);
   }
 }
