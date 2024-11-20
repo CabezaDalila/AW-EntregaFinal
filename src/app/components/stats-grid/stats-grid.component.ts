@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
-import { PruebaSupabaseService } from '../../Services/supabase.service';
+import { SupabaseService } from '../../Services/supabase.service';
 @Component({
   selector: 'app-stats-grid',
   standalone: true,
@@ -16,7 +16,7 @@ export class StatsGridComponent implements OnInit{
   investmentReturn = 12.5;
   totalReturn = 25000;
   roi = 33.3;
-  constructor(public auth: AuthService, private supabase:PruebaSupabaseService){}
+  constructor(public auth: AuthService, private supabase:SupabaseService){}
 
   ngOnInit(): void {
     this.auth.isAuthenticated$.subscribe((isAuthenticated) => {
