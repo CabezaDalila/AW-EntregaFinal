@@ -1,13 +1,12 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from '@auth0/auth0-angular';
+import { AssetDetailComponent } from './components/asset-detail/asset-detail.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { GlossaryComponent } from './components/glossary/glossary.component';
 import { HomeComponent } from './components/home/home.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { QuotesComponent } from './components/quotes/quotes.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
-import { AssetDetailComponent } from './components/asset-detail/asset-detail.component';
-import { QuotesComponent } from './components/quotes/quotes.component';
 
 
 export const routes: Routes = [

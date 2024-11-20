@@ -19,7 +19,7 @@ import { InvestmentQuizComponent } from '../investment-quiz/investment-quiz.comp
   styleUrls: ['./welcome.component.scss']
 })
 export class WelcomeComponent implements OnInit {
-  constructor(private auth: AuthService, private router: Router, private prueba:PruebaSupabaseService) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.auth.isAuthenticated$.subscribe(isAuthenticated => {
