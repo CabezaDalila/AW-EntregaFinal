@@ -1,35 +1,99 @@
-<div class="relative h-full">
-  <div class="flex flex-col h-full bg-white text-black shadow-lg transition-all duration-300 ease-in-out"
-      [ngClass]="{'w-64': isOpen, 'w-18': !isOpen}">
-      <div class="flex flex-col space-y-4 p-4">
-          <div class="flex justify-end">
-              <button (click)="toggleSidebar()"
-                  class="inline-flex items-center justify-center p-2 rounded hover:bg-gray-200 focus:ring-gray-300 transition-colors duration-200"
-                  aria-label="Toggle sidebar">
-                  <img [src]="isOpen ? '../../../assets/icons/left-arrow.png' : '../../../assets/icons/right-arrow.png'"
-                      alt="Toggle sidebar" class="w-6 h-6">
-              </button>
-          </div>
-          <a [routerLink]="['/dashboard', 'home']"
-              class="flex items-center space-x-2 p-2 rounded hover:bg-gray-200 transition-colors duration-200">
-              <img src="../../../assets/icons/home.png" alt="dashboard" class="w-6 h-6">
-              <span [ngClass]="{'hidden': !isOpen}">Dashboard</span>
-          </a>
-          <a [routerLink]="['/dashboard', 'quotes']"
-              class="flex items-center space-x-2 p-2 rounded hover:bg-gray-200 transition-colors duration-200">
-              <img src="../../../assets/icons/stock.png" alt="quotes" class="w-6 h-6">
-              <span [ngClass]="{'hidden': !isOpen}">Quotes</span>
-          </a>
-          <a [routerLink]="['/dashboard', 'portfolio']"
-              class="flex items-center space-x-2 p-2 rounded hover:bg-gray-200 transition-colors duration-200">
-              <img src="../../../assets/icons/folder.png" alt="folder" class="w-6 h-6">
-              <span [ngClass]="{'hidden': !isOpen}">Portfolio</span>
-          </a>
+<div class="h-full">
+  <div class="flex flex-col h-full bg-white border-r shadow-sm transition-all duration-300 ease-in-out"
+       [ngClass]="{'w-64': isOpen, 'w-20': !isOpen}">
+    
+    <!-- Header with User Profile -->
+    <div class="p-4 bg-gray-50/80 backdrop-blur-sm border-b">
+      <div class="flex items-center" [ngClass]="{'gap-3': isOpen, 'justify-between': !isOpen}">
+        <!-- Profile Section -->
+        <div class="relative group shrink-0">
+          <img [src]="userPicture || '../../../assets/icons/user.png'" 
+               alt="Profile" 
+               class="w-10 h-10 rounded-full border-2 border-white shadow-sm transition-all duration-300 ease-in-out"
+               [ngClass]="{'scale-90': !isOpen}">
+          <div class="absolute inset-0 rounded-full bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-200"></div>
+        </div>
+        
+        <!-- User Info with Fade Animation -->
+        <div class="flex-grow transition-all duration-300 ease-in-out overflow-hidden"
+             [ngClass]="{'opacity-0 w-0': !isOpen, 'opacity-100 w-auto': isOpen}">
+          <p class="text-sm font-medium text-gray-700 whitespace-nowrap">{{userName || 'Usuario'}}</p>
+          <p class="text-xs text-gray-500 whitespace-nowrap">Mi cuenta</p>
+        </div>
+        
+        <!-- Toggle Button -->
+        <button (click)="toggleSidebar()"
+                class="p-2 rounded-full bg-white shadow-sm hover:bg-gray-100 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-purple-500 shrink-0"
+                [ngClass]="{'ml-2': !isOpen}">
+          <img src="../../../assets/icons/right-arrow.png"
+               alt="Toggle sidebar" 
+               class="w-4 h-4 opacity-60 hover:opacity-100 transition-all duration-300 ease-in-out transform"
+               [ngClass]="{'rotate-180': isOpen}">
+        </button>
       </div>
-      <div class="mt-auto flex items-center gap-2 p-4" [ngClass]="{'justify-center': !isOpen}">
-          <img [src]="userName ? userPicture : '../../../assets/icons/user.png'" alt="user"
-              class="w-10 h-10 rounded-full">
-          <p [ngClass]="{'hidden': !isOpen}">{{userName || 'UserName'}}</p>
+    </div>
+
+    <!-- Navigation Links -->
+    <nav class="flex-1 px-4 py-6">
+      <div class="space-y-4">
+        <!-- Dashboard -->
+        <a [routerLink]="['/dashboard', 'home']" 
+           routerLinkActive="bg-purple-50 text-purple-600"
+           class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-50 transition-all duration-200 group">
+          <img src="../../../assets/icons/home.png" 
+               alt="dashboard" 
+               class="w-6 h-6 opacity-60 group-hover:opacity-100 transition-all duration-300">
+          <span class="ml-3 font-medium text-gray-700 group-hover:text-gray-900 transition-all duration-300 ease-in-out overflow-hidden whitespace-nowrap"
+                [ngClass]="{'opacity-0 w-0': !isOpen, 'opacity-100 w-auto': isOpen}">Dashboard</span>
+        </a>
+
+        <!-- Quotes -->
+        <a [routerLink]="['/dashboard', 'quotes']" 
+           routerLinkActive="bg-purple-50 text-purple-600"
+           class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-50 transition-all duration-200 group">
+          <img src="../../../assets/icons/stock.png" 
+               alt="quotes" 
+               class="w-6 h-6 opacity-60 group-hover:opacity-100 transition-all duration-300">
+          <span class="ml-3 font-medium text-gray-700 group-hover:text-gray-900 transition-all duration-300 ease-in-out overflow-hidden whitespace-nowrap"
+                [ngClass]="{'opacity-0 w-0': !isOpen, 'opacity-100 w-auto': isOpen}">Quotes</span>
+        </a>
+
+        <!-- Portfolio -->
+        <a [routerLink]="['/dashboard', 'portfolio']" 
+           routerLinkActive="bg-purple-50 text-purple-600"
+           class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-50 transition-all duration-200 group">
+          <img src="../../../assets/icons/folder.png" 
+               alt="portfolio" 
+               class="w-6 h-6 opacity-60 group-hover:opacity-100 transition-all duration-300">
+          <span class="ml-3 font-medium text-gray-700 group-hover:text-gray-900 transition-all duration-300 ease-in-out overflow-hidden whitespace-nowrap"
+                [ngClass]="{'opacity-0 w-0': !isOpen, 'opacity-100 w-auto': isOpen}">Portfolio</span>
+        </a>
       </div>
+    </nav>
+
+    <!-- Configuration Button (Footer) -->
+    <div class="p-4 bg-gray-50/80 backdrop-blur-sm border-t mt-auto">
+      <div class="relative">
+        <button (click)="toggleConfigMenu()" 
+          class="w-full flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 transition-all duration-200 group config-button">
+          <img src="../../../assets/icons/settings.png" 
+              alt="settings" 
+              class="w-6 h-6 opacity-60 group-hover:opacity-100 transition-all duration-300">
+          <span class="ml-3 font-medium text-gray-700 group-hover:text-gray-900 transition-colors duration-200"
+                [ngClass]="{'opacity-0 w-0': !isOpen, 'opacity-100 w-auto': isOpen}">Configuración</span>
+        </button>
+
+
+        <!-- Configuration Menu -->
+        <div *ngIf="isConfigMenuOpen" 
+           class="absolute bottom-full left-0 mb-2 w-56 bg-white rounded-lg border shadow-lg p-1.5 z-50 config-menu">
+        <button (click)="logout()" 
+                class="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-md group transition-colors">
+          <img src="../../../assets/icons/logout.png" alt="logout" class="w-4 h-4 opacity-60 group-hover:opacity-100">
+          <span>Cerrar sesión</span>
+        </button>
+      </div>
+      </div>
+    </div>
   </div>
 </div>
