@@ -1,12 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { CommonModule } from '@angular/common';
-import { HeaderComponent } from '../header/header.component';
-import { HeroComponent } from '../hero/hero.component';
 import { FeatureCards } from '../featureCards/featureCards.component';
 import { FooterComponent } from '../footer/footer.component';
+import { HeaderComponent } from '../header/header.component';
+import { HeroComponent } from '../hero/hero.component';
 import { InvestmentQuizComponent } from '../investment-quiz/investment-quiz.component';
+
 
 
 @Component({

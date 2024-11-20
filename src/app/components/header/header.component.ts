@@ -62,8 +62,13 @@ export class HeaderComponent {
     this.toggleMenu();
   }
 
-  onCreateAccountClick() {
-    this.createAccountClick.emit();
-    this.toggleMenu();
+  redirectToSignUp() {
+    this.auth.loginWithRedirect({
+      authorizationParams: {
+        screen_hint: 'signup'
+      }
+    });
+    this.toggleMenu(); // Close mobile menu if open
   }
+  
 }

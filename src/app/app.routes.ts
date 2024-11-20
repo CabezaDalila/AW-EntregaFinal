@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { AssetDetailComponent } from './components/asset-detail/asset-detail.component';
+import { QuotesComponent } from './components/quotes/quotes.component';
 
 
 export const routes: Routes = [
@@ -39,6 +40,10 @@ export const routes: Routes = [
       {
         path: 'asset/:symbol',  // Esta es la ruta para el detalle del activo
         component: AssetDetailComponent
+      },
+      {
+        path: 'quotes',
+        component: QuotesComponent
       },
       {
         path: 'portfolio',

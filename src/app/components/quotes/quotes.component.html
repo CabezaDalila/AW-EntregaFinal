@@ -1,0 +1,112 @@
+<div class="container mx-auto px-4 py-8">
+    <h2 class="text-2xl font-bold mb-4 text-gray-800">Cotizaciones</h2>
+
+    <div class="mb-4 flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <!-- filtros -->
+      </div>
+      <!-- buscador -->
+      <input
+        type="text"
+        [value]="searchTerm"
+        (input)="updateDisplayedStocks($event)"
+        placeholder="Buscar: Símbolo - Ej: PAMP"
+        class="border rounded px-3 py-1 w-64">
+    </div>
+
+    <div class="overflow-x-auto bg-white shadow-md rounded">
+      <table class="min-w-full table-auto">
+        <thead>
+          <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+            <th class="py-3 px-6 text-left">Símbolo</th>
+            <th class="py-3 px-6 text-right">Precio de cierre</th>
+            <th class="py-3 px-6 text-right">Precio más alto</th>
+            <th class="py-3 px-6 text-right">Precio más bajo</th>
+            <th class="py-3 px-6 text-right">Precio de apertura</th>
+            <th class="py-3 px-6 text-right">Accion</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-600 text-sm font-light">
+          <ng-container *ngIf="!isLoading; else loadingTemplate">
+            <tr *ngFor="let stock of displayedStocks" class="border-b border-gray-200 hover:bg-gray-100">
+              <td class="py-3 px-6 text-left whitespace-nowrap">
+                <div class="flex items-center">
+                  <span class="font-medium">{{ stock.T }}</span>
+                </div>
+              </td>
+              <td class="py-3 px-6 text-right">{{ stock.c }}</td>
+              <td class="py-3 px-6 text-right">{{ stock.h }}</td>
+              <td class="py-3 px-6 text-right">{{ stock.l }}</td>
+              <td class="py-3 px-6 text-right">{{ stock.n }}</td>
+              <td class="px-3 py-6 text-right">
+                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">ver mas</a>
+            </td>
+            </tr>
+          </ng-container>
+          <ng-template #loadingTemplate>
+            <tr>
+              <td colspan="5" class="py-4 text-center">
+                <div class="flex justify-center items-center">
+                  <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+                  <span class="ml-2">Cargando datos...</span>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </tbody>
+      </table>
+    </div>
+    <!-- paginacion -->
+     
+    <div class="flex justify-center mt-4 space-x-2">
+        @if(this.currentPage===1){
+            <button class="px-3 py-1 bg-gray-200 rounded cursor-not-allowed" disabled>
+                &laquo;&laquo; 
+            </button>
+        }@else{
+            <button
+                class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                (click)="goToFirstPage()"> &laquo;&laquo;
+            </button>
+
+        }
+        @if(this.currentPage===1){
+            <button class="px-3 py-1 bg-gray-200 rounded cursor-not-allowed" disabled>
+                &laquo;
+            </button>    
+        }@else {
+            <button 
+              class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+              (click)="goToPreviousPages()">
+              &laquo; 
+            </button>
+        }
+    
+      <!-- Indicador de página -->
+      <span class="px-3 py-1 rounded text-sm text-gray-600">
+        Página {{ currentPage }} de {{ totalPages }}
+      </span>
+    
+      @if(this.currentPage===this.totalPages){
+        <button
+        class="px-3 py-1 bg-gray-200 rounded cursor-not-allowed disabled:">&raquo;
+      </button>
+      }@else {
+          <button
+            class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+            (click)="goToNextPages()">&raquo;
+          </button>
+      }
+      @if(this.currentPage===this.totalPages){
+        <button
+        class="px-3 py-1 bg-gray-200 rounded cursor-not-allowed disabled:">&raquo; &raquo;
+      </button>
+      }@else {
+          <button
+            class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+            (click)="goToLastPage()">&raquo; &raquo;
+          </button>
+      }
+      
+      </div> 
+  </div>
