@@ -7,6 +7,7 @@ import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { QuotesComponent } from './components/quotes/quotes.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { AssetDetailComponent } from './components/asset-detail/asset-detail.component';
+import { QuotesComponent } from './components/quotes/quotes.component';
 
 
 export const routes: Routes = [
