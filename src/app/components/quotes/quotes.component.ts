@@ -14,6 +14,7 @@ import { formatYYYYMMDD } from '../../shared/utils/date.utility';
   styleUrls: ['./quotes.component.scss']
 })
 export class QuotesComponent implements OnInit {
+  showModalBuy=false;
   // Datos de la API
   stocksData?: IDailyStocksResponse['results'];
   // Datos de la API filtrados para mostrar
@@ -70,7 +71,12 @@ export class QuotesComponent implements OnInit {
       }
     );
   }
-
+  onClickOpenShowModal(){
+    this.showModalBuy=true;
+  }
+  onClickCloseShowModal(){
+    this.showModalBuy=false;
+  }
   // Actualizar los datos filtrados según el término de búsqueda
   updateDisplayedStocks(event: Event): void {
     const searchTerm = (event.target as HTMLInputElement).value.toLowerCase();
