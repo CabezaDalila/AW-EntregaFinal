@@ -7,6 +7,7 @@ import { DetailTicker } from '../../detail-ticker/detail-ticker.component';
 import { IDailyStocksResponse } from '../../interfaces/IdailyStocks';
 import { PurchaseResult } from '../../interfaces/IpurchaseResult';
 import { formatYYYYMMDD } from '../../shared/utils/date.utility';
+
 @Component({
   selector: 'app-quotes',
   standalone: true,

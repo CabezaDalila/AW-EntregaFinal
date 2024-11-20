@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-hero',
@@ -33,7 +34,17 @@ import { CommonModule } from '@angular/common';
 export class HeroComponent {
   @Output() loginClick = new EventEmitter<void>();
 
+  constructor(private auth: AuthService) {}
+
   onLoginClick() {
     this.loginClick.emit();
+  }
+
+  redirectToSignUp() {
+    this.auth.loginWithRedirect({
+      authorizationParams: {
+        screen_hint: 'signup'
+      }
+    });
   }
 }
