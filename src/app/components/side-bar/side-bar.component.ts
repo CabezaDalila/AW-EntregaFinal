@@ -9,6 +9,9 @@ import { AuthService } from '@auth0/auth0-angular';
   imports: [CommonModule, RouterModule],
   templateUrl: './side-bar.component.html',
   styles: []
+
+
+  
 })
 export class SideBarComponent implements OnInit {
   userName?: string = '';
