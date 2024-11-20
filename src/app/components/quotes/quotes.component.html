@@ -38,11 +38,15 @@
               <td class="py-3 px-6 text-right">{{ stock.h }}</td>
               <td class="py-3 px-6 text-right">{{ stock.l }}</td>
               <td class="py-3 px-6 text-right">{{ stock.n }}</td>
-              <td class="px-3 py-6 text-right">
-                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">ver mas</a>
-            </td>
+              <td className="px-3 py-6 text-right">
+                <button  (click)=toggleMenuBuy(stock) 
+                 class="text-sm text-primary-600 hover:text-primary-700">
+                  comprar
+                </button>
+              </td>
             </tr>
           </ng-container>
+        
           <ng-template #loadingTemplate>
             <tr>
               <td colspan="5" class="py-4 text-center">
@@ -56,6 +60,15 @@
         </tbody>
       </table>
     </div>
+    <app-detail-ticker 
+    *ngIf="showBuyModal && selectedStock"
+    [isOpen]="showBuyModal" 
+    [symbol]="selectedStock.T" 
+    [price]="selectedStock.c"
+    (close)="closeModal()"
+    (buy)="handleBuy($event)">
+  </app-detail-ticker>
+   
     <!-- paginacion -->
      
     <div class="flex justify-center mt-4 space-x-2">

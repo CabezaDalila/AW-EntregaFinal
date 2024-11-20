@@ -3,36 +3,32 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ApiPolygonService } from '../../Services/api-polygon.service';
+import { DetailTicker } from '../../detail-ticker/detail-ticker.component';
 import { IDailyStocksResponse } from '../../interfaces/IdailyStocks';
-import { formatYYYYMMDD } from '../../shared/date.utility';
-
+import { PurchaseResult } from '../../interfaces/IpurchaseResult';
+import { formatYYYYMMDD } from '../../shared/utils/date.utility';
 
 @Component({
   selector: 'app-quotes',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,DetailTicker],
   templateUrl: './quotes.component.html',
   styleUrls: ['./quotes.component.scss']
 })
 export class QuotesComponent implements OnInit {
-  // Datos de la API
   stocksData?: IDailyStocksResponse['results'];
-  // Datos de la API filtrados para mostrar
   displayedStocks: IDailyStocksResponse['results'] = [];
-  // Estado de carga
   isLoading = true;
-  // Término de búsqueda ingresado por el usuario
   searchTerm: string = '';
-  // Objeto Subject para manejar el debounce de búsqueda
   private searchSubject = new Subject<string>();
-  // Configuración de paginación
-  itemsPerPage: number = 15; // Elementos por página
-  currentPage: number = 1; // Página actual
-  totalItems: number = 0; // Total de elementos
+  itemsPerPage: number = 15;
+  currentPage: number = 1;
+  totalItems: number = 0; 
   totalPages:number=0;
-  maxVisiblePages: number = 5; // botones
+  maxVisiblePages: number = 5; 
+  showBuyModal=false;
+  selectedStock: IDailyStocksResponse['results'][0] | null = null;
   constructor(private apiPolygon: ApiPolygonService) {}
-
   ngOnInit(): void {
     this.getDailyStock();
 
@@ -45,7 +41,6 @@ export class QuotesComponent implements OnInit {
     });
   }
 
-  // Obtener datos diarios de acciones desde la API
   getDailyStock(): void {
     const date = new Date();
     date.setDate(date.getDate() - 1);
@@ -71,7 +66,25 @@ export class QuotesComponent implements OnInit {
       }
     );
   }
+  
 
+  toggleMenuBuy(stock: IDailyStocksResponse['results'][0]): void {
+    this.showBuyModal = !this.showBuyModal;
+    this.selectedStock = stock;
+  }
+
+  closeModal(): void {
+    this.showBuyModal = false;
+    this.selectedStock = null;
+  }
+
+  handleBuy(event: PurchaseResult) {
+    if (event.success) {
+      console.log(`Compra exitosa: ${event.quantity} unidades adquiridas.`);
+    } else {
+      console.error(`Error en la compra: ${event.error}`);
+    }
+  }
   // Actualizar los datos filtrados según el término de búsqueda
   updateDisplayedStocks(event: Event): void {
     const searchTerm = (event.target as HTMLInputElement).value.toLowerCase();

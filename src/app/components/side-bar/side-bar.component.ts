@@ -24,4 +24,5 @@ export class SideBarComponent implements OnInit {
   toggleSidebar() {
     this.isOpen = !this.isOpen;
   }
+}
 } 
