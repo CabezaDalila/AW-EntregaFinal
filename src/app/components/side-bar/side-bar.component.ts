@@ -25,4 +25,4 @@ export class SideBarComponent implements OnInit {
     this.isOpen = !this.isOpen;
   }
 }
-} 
+ 
