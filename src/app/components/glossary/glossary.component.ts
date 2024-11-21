@@ -5,6 +5,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { FooterComponent } from '../footer/footer.component';
 import { HeaderComponent } from '../header/header.component';
 import { GlossaryTerm } from '../../interfaces/glossary.interface';
+import { AuthService } from '@auth0/auth0-angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-glossary',
@@ -48,6 +50,8 @@ export class GlossaryComponent implements OnInit {
     { id: 25, term: 'Zero-coupon bond', definition: 'Bono que no paga intereses periódicos.', category: 'Instrumentos Financieros' },
   ];
 
+  constructor(private auth: AuthService, private router: Router) {}
+
   filteredTerms: GlossaryTerm[] = [];
   categories: string[] = ['Todos', 'Conceptos Básicos', 'Instrumentos Financieros', 'Inversiones', 'Análisis de Mercado', 'Estrategias de Inversión'];
   selectedCategory: string = 'Todos';
@@ -84,5 +88,9 @@ export class GlossaryComponent implements OnInit {
 
   toggleTerm(termId: number) {
     this.expandedTermId = this.expandedTermId === termId ? null : termId;
+  }
+
+  login() {
+    this.auth.loginWithRedirect();
   }
 }
