@@ -59,7 +59,7 @@ export class PortfolioDistributionComponent implements OnInit {
                     ticker: item.ticker,
                     id: item.id,
                     type: item.tipoTransaccion === 'buy' ? 'buy' : 'sell',
-                    amount: (item.cantidad ?? 0) * (item.precio ?? 0),
+                    amount: parseFloat(((item.cantidad ?? 0) * (item.precio ?? 0)).toFixed(2)),
                     details: {
                       shares: item.cantidad ?? 0,
                       price: item.precio ?? 0
