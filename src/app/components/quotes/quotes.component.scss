@@ -1,0 +1,84 @@
+/* Estilos para el contenedor principal */
+:host {
+    display: block;
+    min-height: 100vh;
+    background-color: #f9fafb;
+  }
+  
+  /* Animaciones para los botones */
+  button {
+    transition: all 0.2s ease-in-out;
+  
+    &:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+  
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+  }
+  
+  /* Mejoras en la tabla */
+  table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+  }
+  
+  th {
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  
+  tr {
+    transition: background-color 0.2s ease;
+  }
+  
+  /* Animación del spinner de carga */
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+  
+  /* Mejoras en la accesibilidad para focus */
+  button:focus, 
+  input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+  }
+  
+  /* Estilizado del scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }

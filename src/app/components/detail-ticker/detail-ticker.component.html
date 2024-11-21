@@ -1,0 +1,126 @@
+<div class="fixed inset-0 flex items-center justify-center z-50" *ngIf="isOpen" [@modalAnimation]>
+  <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" (click)="onCancel()"></div>
+
+  <div class="relative w-full max-w-md mx-4 bg-white rounded-2xl shadow-xl overflow-hidden">
+    <div class="bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4">
+      <div class="flex justify-between items-center">
+        <h2 class="text-xl font-semibold text-white">Comprar Acciones</h2>
+        <button 
+          class="text-white hover:text-gray-200 transition-colors"
+          (click)="onCancel()"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div 
+      class="absolute top-0 left-0 right-0 p-4 transition-all duration-300" 
+      *ngIf="showNotification" 
+      [@notificationAnimation]
+      [ngClass]="{
+        'bg-red-100 text-red-800': errorMessage,
+        'bg-green-100 text-green-800': successMessage
+      }"
+    >
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <svg *ngIf="errorMessage" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <svg *ngIf="successMessage" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          {{ errorMessage || successMessage }}
+        </div>
+      </div>
+    </div>
+
+    <div class="p-6 space-y-6">
+      <div class="bg-gray-50 rounded-xl p-4 space-y-3">
+        <div class="flex justify-between items-center">
+          <span class="text-gray-600">Símbolo</span>
+          <span class="text-lg font-semibold text-gray-900">{{ symbol }}</span>
+        </div>
+        <div class="flex justify-between items-center">
+          <span class="text-gray-600">Precio por acción</span>
+          <span class="text-lg font-semibold text-gray-900">${{ price | number:'1.2-2' }}</span>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <label class="block text-sm font-medium text-gray-700">Cantidad de acciones</label>
+        <div class="flex items-stretch h-12 rounded-lg border border-gray-300 overflow-hidden">
+          <button 
+            class="w-16 flex items-center justify-center bg-gray-50 hover:bg-gray-100 active:bg-gray-200 transition-colors border-r border-gray-300"
+            (click)="decrementQuantity()"
+            [disabled]="quantity <= 1"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+            </svg>
+          </button>
+          <input 
+            type="number" 
+            [(ngModel)]="quantity" 
+            (ngModelChange)="updateTotal()" 
+            min="1"
+            class="block flex-1 px-4 text-center text-lg font-medium focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+          >
+          <button 
+            class="w-16 flex items-center justify-center bg-gray-50 hover:bg-gray-100 active:bg-gray-200 transition-colors border-l border-gray-300"
+            (click)="incrementQuantity()"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+          </button>
+        </div>
+        <div class="flex gap-2 flex-wrap">
+          <button 
+            *ngFor="let quickAmount of [5, 10, 25, 50, 100]"
+            class="px-3 py-1.5 text-sm rounded-md bg-gray-100 hover:bg-gray-200 active:bg-gray-300 transition-colors"
+            (click)="setQuantity(quickAmount)"
+          >
+            {{quickAmount}}
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-primary-50 rounded-xl p-4">
+        <div class="flex justify-between items-center">
+          <span class="text-primary-700 font-medium">Total a pagar</span>
+          <span class="text-xl font-bold text-primary-900">${{ total | number:'1.2-2' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex gap-3">
+      <button 
+        class="flex-1 py-3 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 transition-colors"
+        (click)="onCancel()"
+        [disabled]="isProcessing | async"
+      >
+        Cancelar
+      </button>
+      <button 
+        class="flex-1 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors"
+        (click)="onBuy()"
+        [disabled]="isProcessing | async"
+      >
+        <ng-container *ngIf="!(isProcessing | async)">
+          Confirmar Compra
+        </ng-container>
+        <div class="flex items-center justify-center" *ngIf="isProcessing | async">
+          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Procesando...
+        </div>
+      </button>
+    </div>
+  </div>
+</div>

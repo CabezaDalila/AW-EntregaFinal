@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ApiPolygonService } from '../../Services/api-polygon.service';
-import { DetailTicker } from '../../detail-ticker/detail-ticker.component';
+import { DetailTickerComponent  } from '../detail-ticker/detail-ticker.component';
 import { IDailyStocksResponse } from '../../interfaces/IdailyStocks';
 import { PurchaseResult } from '../../interfaces/IpurchaseResult';
 import { formatYYYYMMDD } from '../../shared/utils/date.utility';
@@ -11,7 +11,7 @@ import { formatYYYYMMDD } from '../../shared/utils/date.utility';
 @Component({
   selector: 'app-quotes',
   standalone: true,
-  imports: [CommonModule,DetailTicker],
+  imports: [CommonModule,DetailTickerComponent ],
   templateUrl: './quotes.component.html',
   styleUrls: ['./quotes.component.scss']
 })
