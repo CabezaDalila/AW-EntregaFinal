@@ -1,18 +1,83 @@
-<div class="quotes-section">
-    
-    <div class="stock-container">
-      <div class="stock-items-row">
-        <div class="stock-item" *ngFor="let stock of stocks | keyvalue">
-          <span class="stock-symbol">{{ stock.key }}</span>
-          <span class="stock-price" [ngClass]="{'negative': stock.value < 0}">
-            {{ formatPrice(stock.value) }}
+<div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h2 class="text-xl font-bold text-gray-800">Cotizaciones Principales</h2>
+      <p class="text-sm text-gray-600">Seguimiento de acciones destacadas</p>
+    </div>
+    <button 
+      (click)="loadStocks()" 
+      [disabled]="updating"
+      class="inline-flex items-center px-4 py-2 bg-primary-100 text-primary-600 rounded-lg hover:bg-primary-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        class="h-5 w-5 mr-2" 
+        [class.animate-spin]="updating"
+        fill="none" 
+        viewBox="0 0 24 24" 
+        stroke="currentColor"
+      >
+        <path 
+          stroke-linecap="round" 
+          stroke-linejoin="round" 
+          stroke-width="2" 
+          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" 
+        />
+      </svg>
+      {{updating ? 'Actualizando...' : 'Actualizar'}}
+    </button>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="mb-6 p-4 bg-red-50 border border-red-200 text-red-600 rounded-lg">
+    <div class="flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      {{error}}
+    </div>
+  </div>
+
+  <!-- Stocks Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div *ngFor="let stock of stocks" 
+         class="bg-gray-50 rounded-xl p-4 hover:shadow-md transition-all duration-300"
+         [routerLink]="['/dashboard/asset', stock.symbol]"
+         style="cursor: pointer;">
+      <div class="flex justify-between items-start mb-2">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900">{{stock.symbol}}</h3>
+          <p class="text-2xl font-bold">{{formatPrice(stock.price)}}</p>
+        </div>
+        <div [class]="stock.change >= 0 ? 'text-green-600' : 'text-red-600'"
+             class="text-right">
+          <div class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                 class="h-5 w-5 mr-1" 
+                 [class.rotate-180]="stock.change < 0"
+                 fill="none" 
+                 viewBox="0 0 24 24" 
+                 stroke="currentColor">
+              <path stroke-linecap="round" 
+                    stroke-linejoin="round" 
+                    stroke-width="2" 
+                    d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+            <span class="font-semibold">
+              {{formatPercent(stock.changePercent)}}
+            </span>
+          </div>
+          <span class="text-sm">
+            {{formatPrice(stock.change)}}
           </span>
         </div>
       </div>
-      <button class="update-button" (click)="loadStocks()" [disabled]="updating">
-        <i *ngIf="updating" class="fas fa-sync-alt loading-icon"></i>
-        Actualizar acciones
-      </button>
+      
+      <div class="flex justify-between items-center text-sm text-gray-500">
+        <span>Vol: {{formatVolume(stock.volume)}}</span>
+        <span>{{getTimeAgo(stock.lastUpdate)}}</span>
+      </div>
     </div>
   </div>
-  
+</div>
