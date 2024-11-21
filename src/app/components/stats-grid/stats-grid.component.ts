@@ -14,7 +14,7 @@ import { SupabaseService } from '../../Services/supabase.service';
 export class StatsGridComponent implements OnInit{
   availableCash:number = 0;
   cashChange = 2.5;
-  totalInvested = 75000;
+  totalInvested = 0;
   investmentReturn = 12.5;
   totalReturn = 25000;
   roi = 33.3;
@@ -33,6 +33,7 @@ export class StatsGridComponent implements OnInit{
               .then((data) => {
                 console.log("Datos obtenidos:", data);
                 this.availableCash=data.dineroDisponible;
+                this.totalInvested=data.totalInvertido;
               })
               .catch((error) => {
                 console.error("Error al obtener dinero disponible:", error);
