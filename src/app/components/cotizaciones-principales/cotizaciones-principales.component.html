@@ -1,0 +1,18 @@
+<div class="quotes-section">
+    
+    <div class="stock-container">
+      <div class="stock-items-row">
+        <div class="stock-item" *ngFor="let stock of stocks | keyvalue">
+          <span class="stock-symbol">{{ stock.key }}</span>
+          <span class="stock-price" [ngClass]="{'negative': stock.value < 0}">
+            {{ formatPrice(stock.value) }}
+          </span>
+        </div>
+      </div>
+      <button class="update-button" (click)="loadStocks()" [disabled]="updating">
+        <i *ngIf="updating" class="fas fa-sync-alt loading-icon"></i>
+        Actualizar acciones
+      </button>
+    </div>
+  </div>
+  
