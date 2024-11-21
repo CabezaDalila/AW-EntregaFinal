@@ -4,19 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { FooterComponent } from '../footer/footer.component';
 import { HeaderComponent } from '../header/header.component';
-
-interface GlossaryTerm {
-  id: number;
-  term: string;
-  definition: string;
-  category: string;
-}
+import { GlossaryTerm } from '../../interfaces/glossary.interface';
 
 @Component({
   selector: 'app-glossary',
   standalone: true,
   imports: [CommonModule, FormsModule, HeaderComponent, FooterComponent],
-  templateUrl:'./glossary.component.html',
+  templateUrl: './glossary.component.html',
   animations: [
     trigger('expandCollapse', [
       state('collapsed', style({ height: '0', opacity: '0' })),
