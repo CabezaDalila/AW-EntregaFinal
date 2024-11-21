@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ApiPolygonService } from '../../Services/api-polygon.service';
 import { catchError, of } from 'rxjs';
+import { ApiPolygonService } from '../../Services/api-polygon.service';
 
 interface StockData {
   symbol: string;
@@ -36,8 +36,6 @@ export class CotizacionesPrincipalesComponent implements OnInit {
 
   ngOnInit() {
     this.loadStocksFromStorage();
-    // Carga inicial
-    this.loadStocks();
   }
 
   loadStocks() {
