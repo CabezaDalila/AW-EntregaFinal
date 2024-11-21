@@ -29,7 +29,7 @@ export class StatsGridComponent implements OnInit{
         this.auth.user$.subscribe((user) => {
           console.log("Datos del usuario recibidos:", user);
           if (user?.email) {
-            this.supabase.getDineroDisponible({ email: user.email })
+            this.supabase.getDataPortfolioUser({ email: user.email })
               .then((data) => {
                 console.log("Datos obtenidos:", data);
                 this.availableCash=data.dineroDisponible;
