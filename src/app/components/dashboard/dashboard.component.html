@@ -1,13 +1,12 @@
-<div class="h-[100vh] flex flex-col">
+<div class="dashboard-container">
+    <app-header></app-header>
     
-    <div class="h-[90px]">
-        <app-header></app-header>
-    </div>
-    <div class="flex flex-1">
+    <div class="dashboard-content">
         <app-side-bar></app-side-bar>
-        <div class="flex-1 p-4">
+        <main class="main-content">
             <router-outlet></router-outlet>
-        </div>
+        </main>
     </div>
+    
     <app-footer [isDashboard]="true"></app-footer>
 </div>
