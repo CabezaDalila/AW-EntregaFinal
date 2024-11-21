@@ -1,15 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { ApiPolygonService } from '../../Services/api-polygon.service';
-import { interval, Subscription } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { catchError, of } from 'rxjs';
+import { ApiPolygonService } from '../../Services/api-polygon.service';
 
 interface StockData {
-  symbol: string;
   price: number;
-  change: number;
-  changePercent: number;
+  previousPrice: number;
   volume: number;
   lastUpdate: Date;
 }
@@ -17,134 +14,147 @@ interface StockData {
 @Component({
   selector: 'app-cotizaciones-principales',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule],
   templateUrl: './cotizaciones-principales.component.html',
-  styleUrls: ['./cotizaciones-principales.component.scss']
+  styleUrls: ['./cotizaciones-principales.component.scss'],
 })
-export class CotizacionesPrincipalesComponent implements OnInit, OnDestroy {
-  stocks: StockData[] = [
-    { symbol: 'AAPL', price: 0, change: 0, changePercent: 0, volume: 0, lastUpdate: new Date() },
-    { symbol: 'MSFT', price: 0, change: 0, changePercent: 0, volume: 0, lastUpdate: new Date() },
-    { symbol: 'GOOGL', price: 0, change: 0, changePercent: 0, volume: 0, lastUpdate: new Date() },
-    { symbol: 'AMZN', price: 0, change: 0, changePercent: 0, volume: 0, lastUpdate: new Date() }
-  ];
-  
-  updating: boolean = false;
-  error: string | null = null;
-  private updateSubscription?: Subscription;
-  private readonly LOCAL_STORAGE_KEY = 'stocksData';
+export class CotizacionesPrincipalesComponent implements OnInit {
+  stocks: { [key: string]: number } = {
+    AAPL: 0,
+    MSFT: 0,
+    KO: 0,
+  };
 
-  constructor(private apiPolygon: ApiPolygonService) {}
+  stocksData: { [key: string]: StockData } = {
+    AAPL: { price: 0, previousPrice: 0, volume: 0, lastUpdate: new Date() },
+    MSFT: { price: 0, previousPrice: 0, volume: 0, lastUpdate: new Date() },
+    KO: { price: 0, previousPrice: 0, volume: 0, lastUpdate: new Date() },
+  };
+
+  companyNames: { [key: string]: string } = {
+    AAPL: 'Apple Inc.',
+    MSFT: 'Microsoft Corporation',
+    KO: 'Coca-Cola Company',
+  };
+
+  updating = false;
+  selectedStock: string | null = null;
+  private readonly LOCAL_STORAGE_KEY = 'stocks_data';
+
+  constructor(
+    private http: HttpClient,
+    private apiPolygon: ApiPolygonService
+  ) {}
 
   ngOnInit() {
-    this.loadStocksFromStorage();
+    this.loadStockPricesFromStorage();
     this.loadStocks();
-    
-    // Actualizar cada 5 minutos
-    this.updateSubscription = interval(300000).subscribe(() => {
-      this.loadStocks();
-    });
-  }
-
-  ngOnDestroy() {
-    if (this.updateSubscription) {
-      this.updateSubscription.unsubscribe();
-    }
   }
 
   loadStocks() {
     if (this.updating) return;
-
     this.updating = true;
-    this.error = null;
 
-    const promises = this.stocks.map(stock => {
-      return this.apiPolygon.getStockPreviousClose(stock.symbol)
-        .pipe(
-          catchError(error => {
-            console.error(`Error fetching ${stock.symbol}:`, error);
-            return of(null);
-          })
-        )
-        .toPromise()
-        .then(data => {
-          if (data?.results?.[0]) {
-            const result = data.results[0];
-            const previousPrice = stock.price;
-            stock.price = result.c;
-            stock.volume = result.v;
-            stock.change = result.c - result.o;
-            stock.changePercent = ((result.c - result.o) / result.o) * 100;
-            stock.lastUpdate = new Date();
-          }
-        });
-    });
-
-    Promise.all(promises)
-      .then(() => {
-        this.saveStocksToStorage();
-      })
-      .catch(error => {
-        this.error = 'Error al actualizar las cotizaciones';
-        console.error('Error updating stocks:', error);
+    this.fetchStockPrices(Object.keys(this.stocks))
+      .catch((error) => {
+        console.error('Error al actualizar los precios:', error);
       })
       .finally(() => {
         this.updating = false;
       });
   }
 
-  private loadStocksFromStorage() {
-    const savedData = localStorage.getItem(this.LOCAL_STORAGE_KEY);
-    if (savedData) {
-      const parsedData = JSON.parse(savedData);
-      this.stocks = parsedData.map((stock: any) => ({
-        ...stock,
-        lastUpdate: new Date(stock.lastUpdate)
-      }));
-    }
-  }
-
-  private saveStocksToStorage() {
-    localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify(this.stocks));
-  }
-
   formatPrice(price: number): string {
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('es-ES', {
       style: 'currency',
       currency: 'USD',
-      minimumFractionDigits: 2
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
     }).format(price);
   }
 
-  formatPercent(value: number): string {
-    return new Intl.NumberFormat('en-US', {
-      style: 'percent',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    }).format(value / 100);
+  formatPercentage(value: number): string {
+    return `${value >= 0 ? '+' : ''}${value.toFixed(2)}%`;
   }
 
   formatVolume(volume: number): string {
     if (volume >= 1000000) {
-      return (volume / 1000000).toFixed(1) + 'M';
+      return `${(volume / 1000000).toFixed(1)}M`;
     } else if (volume >= 1000) {
-      return (volume / 1000).toFixed(1) + 'K';
+      return `${(volume / 1000).toFixed(1)}K`;
     }
     return volume.toString();
   }
 
-  getTimeAgo(date: Date): string {
-    const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
-    
-    if (seconds < 60) return 'hace menos de un minuto';
-    
-    const minutes = Math.floor(seconds / 60);
-    if (minutes < 60) return `hace ${minutes} ${minutes === 1 ? 'minuto' : 'minutos'}`;
-    
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24) return `hace ${hours} ${hours === 1 ? 'hora' : 'horas'}`;
-    
-    const days = Math.floor(hours / 24);
-    return `hace ${days} ${days === 1 ? 'día' : 'días'}`;
+  getCompanyName(symbol: string): string {
+    return this.companyNames[symbol] || symbol;
+  }
+
+  getPriceChange(symbol: string): number {
+    const data = this.stocksData[symbol];
+    if (!data.previousPrice) return 0;
+    return ((data.price - data.previousPrice) / data.previousPrice) * 100;
+  }
+
+  getPriceChangeClass(change: number): string {
+    return change > 0 ? 'text-green-600' : change < 0 ? 'text-red-600' : 'text-gray-600';
+  }
+
+  getVolume(symbol: string): number {
+    return this.stocksData[symbol].volume;
+  }
+
+  getLastUpdate(symbol: string): Date {
+    return this.stocksData[symbol].lastUpdate;
+  }
+
+  private fetchStockPrices(symbols: string[]): Promise<void> {
+    const requests = symbols.map((symbol) => {
+      return this.apiPolygon
+        .getStockPreviousClose(symbol)
+        .pipe(
+          catchError((error) => {
+            console.error(`Error al obtener datos para ${symbol}:`, error);
+            return of({ results: [{ c: 0, v: 0 }] });
+          })
+        )
+        .toPromise()
+        .then((data) => {
+          if (data?.results?.[0]) {
+            const currentPrice = data.results[0].c;
+            this.stocksData[symbol] = {
+              price: currentPrice,
+              previousPrice: this.stocksData[symbol].price || currentPrice,
+              volume: data.results[0].v || 0,
+              lastUpdate: new Date()
+            };
+            this.stocks[symbol] = currentPrice;
+          }
+        });
+    });
+
+    return Promise.all(requests).then(() => {
+      this.saveStockPrices();
+    });
+  }
+
+  private saveStockPrices() {
+    localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify({
+      stocks: this.stocks,
+      stocksData: this.stocksData
+    }));
+  }
+
+  private loadStockPricesFromStorage() {
+    const storedData = localStorage.getItem(this.LOCAL_STORAGE_KEY);
+    if (storedData) {
+      const data = JSON.parse(storedData);
+      this.stocks = data.stocks;
+      this.stocksData = data.stocksData;
+      // Convertir las fechas almacenadas en string a objetos Date
+      Object.keys(this.stocksData).forEach(symbol => {
+        this.stocksData[symbol].lastUpdate = new Date(this.stocksData[symbol].lastUpdate);
+      });
+    }
   }
 }
