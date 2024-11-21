@@ -1,11 +1,11 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '@auth0/auth0-angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SupabaseService } from '../../Services/supabase.service';
 import { PurchaseResult } from '../../interfaces/IpurchaseResult';
-import { trigger, transition, style, animate } from '@angular/animations';
 
 
 @Component({
@@ -115,10 +115,10 @@ export class DetailTickerComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    if (!this.total || this.total <= 0) {
-      this.showError('El total de la compra no es válido');
-      return false;
-    }
+    // if (!this.total || this.total <= 0) {
+    //   this.showError('El total de la compra no es válido');
+    //   return false;
+    // }
 
     return true;
   }

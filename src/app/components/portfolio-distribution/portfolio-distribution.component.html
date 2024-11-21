@@ -41,10 +41,7 @@
               <path *ngIf="transaction.type === 'sell'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
           </div>
-          <div>
-            <p class="text-sm font-medium text-gray-900">{{transaction.description}}</p>
-            <p class="text-xs text-gray-500">{{transaction.time}}</p>
-          </div>
+          <span class="text-sm font-medium text-gray-900">{{transaction.ticker}}</span>
         </div>
         <span class="text-sm font-medium text-gray-900">{{transaction.amount | currency}}</span>
       </div>
@@ -81,11 +78,11 @@
             />
           </div>
           <div class="flex gap-4">
-            <input
+            <!-- <input
               type="date"
               [(ngModel)]="dateFilter"
               class="w-full lg:w-auto px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-            />
+            /> -->
             <button
               (click)="resetFilters()"
               class="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50"
@@ -107,6 +104,7 @@
               <div class="flex items-center space-x-3">
                 <div [class]="transaction.type === 'buy' ? 'bg-green-100' : 'bg-red-100'" 
                      class="p-2 rounded-lg shrink-0">
+
                   <svg xmlns="http://www.w3.org/2000/svg" 
                        [class]="transaction.type === 'buy' ? 'text-green-600' : 'text-red-600'"
                        class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -114,10 +112,8 @@
                     <path *ngIf="transaction.type === 'sell'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                   </svg>
                 </div>
-                <div class="min-w-0">
-                  <p class="text-sm font-medium text-gray-900 truncate">{{transaction.description}}</p>
-                  <p class="text-xs text-gray-500">{{transaction.time}}</p>
-                </div>
+                <span class="text-sm font-medium text-gray-900">{{transaction.ticker}}</span>
+                <!-- <span class="text-xs text-gray-500">{{transaction.id}}</span> -->
               </div>
               <div class="flex items-center space-x-4">
                 <span class="text-sm font-medium text-gray-900">{{transaction.amount | currency}}</span>
@@ -142,15 +138,8 @@
                   <p class="text-sm text-gray-500">Precio por acción</p>
                   <p class="text-sm font-medium">{{transaction.details.price | currency}}</p>
                 </div>
+               
                 <div>
-                  <p class="text-sm text-gray-500">Comisiones</p>
-                  <p class="text-sm font-medium">{{transaction.details.fees | currency}}</p>
-                </div>
-                <div>
-                  <p class="text-sm text-gray-500">Estado</p>
-                  <span [class]="getStatusClass(transaction.details.status) + ' text-xs px-2 py-1 rounded-full inline-block mt-1'">
-                    {{transaction.details.status | titlecase}}
-                  </span>
                 </div>
               </div>
             </div>

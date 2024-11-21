@@ -27,7 +27,7 @@ export class SupabaseService implements OnInit {
    return  this.http.post(url,{name:'emanuel'}).toPromise();
   }
  
-  getDineroDisponible({email}: {email: string}): Promise<any> {
+  getDataPortfolioUser({email}: {email: string}): Promise<any> {
       const url = `https://bmwuihgmnmblmdrkqiht.supabase.co/functions/v1/transaccion?email=${email}`;
       return this.http.get<any>(url).toPromise();
   }
