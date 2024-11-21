@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ApiPolygonService } from '../../Services/api-polygon.service';
-import { interval, Subscription } from 'rxjs';
 import { catchError, of } from 'rxjs';
 
 interface StockData {
@@ -21,7 +20,7 @@ interface StockData {
   templateUrl: './cotizaciones-principales.component.html',
   styleUrls: ['./cotizaciones-principales.component.scss']
 })
-export class CotizacionesPrincipalesComponent implements OnInit, OnDestroy {
+export class CotizacionesPrincipalesComponent implements OnInit {
   stocks: StockData[] = [
     { symbol: 'AAPL', price: 0, change: 0, changePercent: 0, volume: 0, lastUpdate: new Date() },
     { symbol: 'MSFT', price: 0, change: 0, changePercent: 0, volume: 0, lastUpdate: new Date() },
@@ -31,25 +30,14 @@ export class CotizacionesPrincipalesComponent implements OnInit, OnDestroy {
   
   updating: boolean = false;
   error: string | null = null;
-  private updateSubscription?: Subscription;
   private readonly LOCAL_STORAGE_KEY = 'stocksData';
 
   constructor(private apiPolygon: ApiPolygonService) {}
 
   ngOnInit() {
     this.loadStocksFromStorage();
+    // Carga inicial
     this.loadStocks();
-    
-    // Actualizar cada 5 minutos
-    this.updateSubscription = interval(300000).subscribe(() => {
-      this.loadStocks();
-    });
-  }
-
-  ngOnDestroy() {
-    if (this.updateSubscription) {
-      this.updateSubscription.unsubscribe();
-    }
   }
 
   loadStocks() {
