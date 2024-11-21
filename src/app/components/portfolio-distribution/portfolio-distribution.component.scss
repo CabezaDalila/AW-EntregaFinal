@@ -1,47 +1,59 @@
 .modal-container {
-    isolation: isolate;
+  isolation: isolate;
+}
+
+.modal-overlay {
+  backdrop-filter: blur(4px);
+}
+
+.transaction-details {
+  transition: all 0.3s ease-out;
+}
+
+/* Animaciones para las barras de progreso */
+.progress-bar {
+  transition: width 1s ease-in-out;
+}
+
+/* Mejoras para el scroll */
+.overflow-y-auto {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+}
+
+.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5);
+  border-radius: 3px;
+}
+
+/* Mejoras para inputs en móviles */
+@media (max-width: 640px) {
+  input[type="text"] {
+    font-size: 16px;
   }
   
-  .modal-overlay {
-    backdrop-filter: blur(4px);
+  .modal-content {
+    margin: 0;
+    height: 100%;
+    border-radius: 0;
   }
+}
+
+/* Efectos hover para elementos interactivos */
+.hover-effect {
+  transition: all 0.2s ease-in-out;
   
-  .transaction-details {
-    transition: all 0.3s ease-out;
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
-  
-  @media (max-width: 640px) {
-    .modal-content {
-      margin: 0;
-      height: 100%;
-      border-radius: 0;
-    }
-  }
-  
-  /* Mejoras para el scroll en dispositivos móviles */
-  .overflow-y-auto {
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
-  }
-  
-  .overflow-y-auto::-webkit-scrollbar {
-    width: 6px;
-  }
-  
-  .overflow-y-auto::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  .overflow-y-auto::-webkit-scrollbar-thumb {
-    background-color: rgba(156, 163, 175, 0.5);
-    border-radius: 3px;
-  }
-  
-  /* Mejoras para inputs en móviles */
-  @media (max-width: 640px) {
-    input[type="date"],
-    input[type="text"] {
-      font-size: 16px; /* Previene el zoom automático en iOS */
-    }
-  }
+}
