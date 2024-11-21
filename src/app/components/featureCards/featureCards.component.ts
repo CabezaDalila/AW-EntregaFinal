@@ -9,24 +9,26 @@ interface Service {
 }
 
 @Component({
-  selector: 'app-featureCards',
+  selector: 'app-feature-cards',
   standalone: true,
   imports: [CommonModule],
-  templateUrl:'./featureCards.component.html',
-  styles: [`
-    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css');
-  `],
+  templateUrl: './featureCards.component.html',
+  styleUrls: ['./featureCards.component.scss'],
   animations: [
-    trigger('fadeInOut', [
-      state('inactive', style({
-        opacity: 0.7
+    trigger('cardAnimation', [
+      state('initial', style({
+        transform: 'translateX(0) rotateY(0)',
+        zIndex: 1,
+        filter: 'brightness(0.9)'
       })),
-      state('active', style({
-        opacity: 1,
-        transform: 'scale(1.05)'
+      state('hovered', style({
+        transform: 'translateY(-20px) translateX(75px) rotateY(-15deg)',
+        zIndex: 10,
+        filter: 'brightness(1)'
       })),
-      transition('inactive => active', animate('300ms ease-in')),
-      transition('active => inactive', animate('300ms ease-out'))
+      transition('initial <=> hovered', [
+        animate('400ms cubic-bezier(0.4, 0, 0.2, 1)')
+      ])
     ])
   ]
 })
@@ -36,37 +38,37 @@ export class FeatureCards implements OnInit {
       title: 'Aprende Invirtiendo',
       description: 'Practica con dinero virtual y aprende los fundamentos de la inversión sin riesgos.',
       icon: 'fas fa-graduation-cap',
-      state: 'inactive'
+      state: 'initial'
     },
     {
       title: 'Simulaciones de Mercado',
       description: 'Experimenta con simulaciones realistas del mercado bursátil y toma decisiones informadas.',
       icon: 'fas fa-chart-line',
-      state: 'inactive'
+      state: 'initial'
     },
     {
       title: 'Comunidad de Inversores',
       description: 'Conecta con otros inversores jóvenes, comparte estrategias y aprende de los expertos.',
       icon: 'fas fa-users',
-      state: 'inactive'
+      state: 'initial'
     },
     {
       title: 'Análisis Personalizado',
       description: 'Recibe análisis detallados de tu portafolio y recomendaciones personalizadas.',
       icon: 'fas fa-analytics',
-      state: 'inactive'
+      state: 'initial'
     },
     {
       title: 'Retos y Competencias',
       description: 'Participa en desafíos de inversión y compite con otros usuarios para ganar premios.',
       icon: 'fas fa-trophy',
-      state: 'inactive'
+      state: 'initial'
     },
     {
       title: 'Educación Financiera',
       description: 'Accede a cursos y recursos educativos para mejorar tu conocimiento financiero.',
       icon: 'fas fa-book-open',
-      state: 'inactive'
+      state: 'initial'
     }
   ];
 
@@ -74,17 +76,17 @@ export class FeatureCards implements OnInit {
     setTimeout(() => {
       this.services.forEach((service, index) => {
         setTimeout(() => {
-          service.state = 'active';
+          service.state = 'initial';
         }, index * 200);
       });
     }, 500);
   }
 
   onMouseEnter(index: number) {
-    this.services[index].state = 'active';
+    this.services[index].state = 'hovered';
   }
 
   onMouseLeave(index: number) {
-    this.services[index].state = 'inactive';
+    this.services[index].state = 'initial';
   }
 }
