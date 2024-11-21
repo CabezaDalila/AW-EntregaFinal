@@ -1,61 +1,84 @@
-
 <div class="min-h-screen bg-gradient-to-br from-purple-100 to-white">
-    <app-header></app-header>
-    <div class="container mx-auto px-4 py-16">
+  <app-header></app-header>
+  <div class="container mx-auto px-4 py-16">
+    <div class="max-w-4xl mx-auto">
       <h1 class="text-4xl font-bold text-center text-purple-900 mb-4 mt-16">Glosario Financiero</h1>
       <p class="text-center text-gray-600 mb-8">Explora términos financieros clave para mejorar tu comprensión del mundo de las inversiones.</p>
       
-      <!-- Search Bar -->
-      <div class="mb-8">
-        <input
-          type="text"
-          [(ngModel)]="searchTerm"
-          (input)="filterTerms()"
-          placeholder="Buscar término..."
-          class="w-full px-4 py-2 rounded-full border-2 border-purple-300 focus:outline-none focus:border-purple-500"
-        />
+      <!-- Search and Filters Container -->
+      <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+        <!-- Search Bar -->
+        <div class="mb-6">
+          <div class="relative">
+            <input
+              type="text"
+              [(ngModel)]="searchTerm"
+              (input)="filterTerms()"
+              placeholder="Buscar término..."
+              class="w-full px-4 py-3 pl-12 rounded-lg border-2 border-purple-200 focus:outline-none focus:border-purple-500 transition-colors"
+            />
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-400 absolute left-3 top-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="flex flex-wrap gap-2 mb-6">
+          <button
+            *ngFor="let category of categories"
+            (click)="selectCategory(category)"
+            [class.bg-purple-600]="selectedCategory === category"
+            [class.text-white]="selectedCategory === category"
+            [class.hover:bg-purple-700]="selectedCategory === category"
+            [class.hover:bg-purple-200]="selectedCategory !== category"
+            class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
+            [class.bg-purple-100]="selectedCategory !== category"
+            [class.text-purple-700]="selectedCategory !== category"
+          >
+            {{ category }}
+          </button>
+        </div>
+
+        <!-- Alphabetical Index -->
+        <div class="flex flex-wrap gap-1">
+          <button
+            *ngFor="let letter of alphabet"
+            (click)="selectLetter(letter)"
+            [class.bg-purple-600]="selectedLetter === letter"
+            [class.text-white]="selectedLetter === letter"
+            [class.hover:bg-purple-700]="selectedLetter === letter"
+            [class.hover:bg-purple-200]="selectedLetter !== letter"
+            class="w-8 h-8 flex items-center justify-center rounded-md text-sm font-medium transition-all duration-200"
+            [class.bg-purple-100]="selectedLetter !== letter"
+            [class.text-purple-700]="selectedLetter !== letter"
+          >
+            {{ letter }}
+          </button>
+        </div>
       </div>
 
-      <!-- Category Tabs -->
-      <div class="flex flex-wrap justify-center mb-8">
-        <button
-          *ngFor="let category of categories"
-          (click)="selectCategory(category)"
-          [class.bg-purple-600]="selectedCategory === category"
-          [class.text-white]="selectedCategory === category"
-          class="px-4 py-2 m-1 rounded-full bg-purple-200 text-purple-800 hover:bg-purple-300 transition duration-300"
-        >
-          {{ category }}
-        </button>
-      </div>
-
-      <!-- Alphabetical Index -->
-      <div class="flex flex-wrap justify-center mb-8">
-        <button
-          *ngFor="let letter of alphabet"
-          (click)="selectLetter(letter)"
-          [class.bg-purple-600]="selectedLetter === letter"
-          [class.text-white]="selectedLetter === letter"
-          class="px-3 py-1 m-1 rounded-full bg-purple-200 text-purple-800 hover:bg-purple-300 transition duration-300"
-        >
-          {{ letter }}
-        </button>
-      </div>
-
-      <!-- Glossary Terms -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Glossary Terms List -->
+      <div class="space-y-4">
         <div
           *ngFor="let term of filteredTerms"
-          class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
+          class="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
         >
           <div
             (click)="toggleTerm(term.id)"
-            class="cursor-pointer p-4 bg-purple-100 flex justify-between items-center"
+            class="cursor-pointer p-5 flex justify-between items-center"
           >
-            <h3 class="text-lg font-semibold text-purple-900">{{ term.term }}</h3>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold text-purple-900">{{ term.term }}</h3>
+                <span class="text-sm text-purple-500 bg-purple-50 px-3 py-1 rounded-full">
+                  {{ term.category }}
+                </span>
+              </div>
+            </div>
             <svg
               [class.rotate-180]="expandedTermId === term.id"
-              class="w-5 h-5 text-purple-600 transition-transform duration-300"
+              class="w-5 h-5 text-purple-400 ml-4 transition-transform duration-300"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -66,12 +89,21 @@
           <div
             *ngIf="expandedTermId === term.id"
             [@expandCollapse]="expandedTermId === term.id ? 'expanded' : 'collapsed'"
-            class="p-4 bg-white"
+            class="px-5 pb-5 border-t border-purple-100"
           >
-            <p class="text-gray-700">{{ term.definition }}</p>
+            <p class="mt-4 text-gray-600 leading-relaxed">{{ term.definition }}</p>
           </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div *ngIf="filteredTerms.length === 0" class="text-center py-12">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-purple-200 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p class="text-gray-500">No se encontraron términos que coincidan con tu búsqueda</p>
         </div>
       </div>
     </div>
-    <app-footer></app-footer> 
   </div>
+  <app-footer></app-footer>
+</div>
