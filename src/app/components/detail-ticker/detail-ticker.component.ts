@@ -114,12 +114,6 @@ export class DetailTickerComponent implements OnInit, OnDestroy {
       this.showError('La cantidad debe ser mayor a 0');
       return false;
     }
-
-    // if (!this.total || this.total <= 0) {
-    //   this.showError('El total de la compra no es válido');
-    //   return false;
-    // }
-
     return true;
   }
 

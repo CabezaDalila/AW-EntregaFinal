@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { ApiPolygonService } from '../../Services/api-polygon.service';
 import { HeaderComponent } from '../../components/header/header.component';
-import { SideBarComponent } from '../side-bar/side-bar.component';
 import { FooterComponent } from '../footer/footer.component';
+import { SideBarComponent } from '../side-bar/side-bar.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +16,7 @@ import { FooterComponent } from '../footer/footer.component';
   styleUrls: ['./dashboard.component.scss'],
   providers: [ApiPolygonService]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent  {
   stockForm: FormGroup;
   stockData: any;
 
@@ -35,12 +35,8 @@ export class DashboardComponent implements OnInit {
 
   @HostListener('window:popstate', ['$event'])
   onPopState(event: Event) {
-    // history.pushState(null, '', '/dashboard');
   }
 
-  ngOnInit() {
-    // history.pushState(null, '', '/dashboard');
-  }
 
   logOut() {
     this.auth.logout({ logoutParams: { returnTo: window.location.origin } });

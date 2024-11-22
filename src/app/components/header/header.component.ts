@@ -1,7 +1,7 @@
-import { Component, Output, EventEmitter, HostListener } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
-import { trigger, transition, style, animate, state } from '@angular/animations';
+import { Component, EventEmitter, HostListener, Output } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
@@ -68,7 +68,7 @@ export class HeaderComponent {
         screen_hint: 'signup'
       }
     });
-    this.toggleMenu(); // Close mobile menu if open
+    this.toggleMenu(); 
   }
   
 }
