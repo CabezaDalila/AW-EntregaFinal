@@ -32,10 +32,10 @@ export class QuotesComponent implements OnInit {
   ngOnInit(): void {
     this.getDailyStock();
 
-    // Configurar el debounce para la búsqueda
+   
     this.searchSubject.pipe(
-      debounceTime(300), // Retraso de 300ms
-      distinctUntilChanged() // Evitar emisiones repetidas
+      debounceTime(300), 
+      distinctUntilChanged()
     ).subscribe(searchTerm => {
       this.filterStocks(searchTerm);
     });
@@ -50,7 +50,7 @@ export class QuotesComponent implements OnInit {
       (data) => {
         if (data?.results && data.results.length > 0) {
           this.stocksData = data.results;
-          this.displayedStocks = data.results; // Inicializar datos visibles
+          this.displayedStocks = data.results;
           this.totalItems = this.stocksData.length;
           this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
           this.setPage(1,this.stocksData);
@@ -85,21 +85,20 @@ export class QuotesComponent implements OnInit {
       console.error(`Error en la compra: ${event.error}`);
     }
   }
-  // Actualizar los datos filtrados según el término de búsqueda
   updateDisplayedStocks(event: Event): void {
     const searchTerm = (event.target as HTMLInputElement).value.toLowerCase();
     this.searchSubject.next(searchTerm);
   }
 
-  // Filtrar los datos según el término de búsqueda
+
   private filterStocks(searchTerm: string): void {
     if (this.stocksData) {
-      // Expand search to include more fields if needed
+      
       this.displayedStocks = this.stocksData.filter(stock =>
         stock?.T?.toLowerCase().includes(searchTerm.toLowerCase())
       );
   
-      // Recalculate pagination
+    
       this.totalItems = this.displayedStocks.length;
       this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
       this.setPage(1, this.displayedStocks);
@@ -111,10 +110,10 @@ export class QuotesComponent implements OnInit {
     const startIndex = (page - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     
-    // Use the passed data parameter for slicing
+   
     this.displayedStocks = data.slice(startIndex, endIndex);
     
-    // Recalculate total pages based on the input data
+    
     this.totalPages = Math.ceil(data.length / this.itemsPerPage);
   }
 

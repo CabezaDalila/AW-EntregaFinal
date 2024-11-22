@@ -4,7 +4,6 @@
     <div class="max-w-4xl mx-auto">
       <h1 class="text-4xl font-bold text-center text-purple-900 mb-4 mt-16">Glosario Financiero</h1>
       <p class="text-center text-gray-600 mb-8">Explora términos financieros clave para mejorar tu comprensión del mundo de las inversiones.</p>
-      
       <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
         <div class="mb-6">
           <div class="relative">
@@ -37,7 +36,6 @@
           </button>
         </div>
 
-        <!-- Alphabetical Index -->
         <div class="flex flex-wrap gap-1">
           <button
             *ngFor="let letter of alphabet"
@@ -55,7 +53,7 @@
         </div>
       </div>
 
-      <!-- Glossary Terms List -->
+
       <div class="space-y-4">
         <div
           *ngFor="let term of filteredTerms"

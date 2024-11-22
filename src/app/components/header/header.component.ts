@@ -11,23 +11,25 @@ import { AuthService } from '@auth0/auth0-angular';
   templateUrl: './header.component.html',
   animations: [
     trigger('slideInOut', [
-      state('out', style({
-        opacity: 0,
-        transform: 'translateY(-100%)'
-      })),
-      state('in', style({
-        opacity: 1,
-        transform: 'translateY(0)'
-      })),
-      transition('out => in', [
-        animate('300ms ease-out')
-      ]),
-      transition('in => out', [
-        animate('300ms ease-in')
-      ])
-    ])
+      state(
+        'out',
+        style({
+          opacity: 0,
+          transform: 'translateY(-100%)',
+        })
+      ),
+      state(
+        'in',
+        style({
+          opacity: 1,
+          transform: 'translateY(0)',
+        })
+      ),
+      transition('out => in', [animate('300ms ease-out')]),
+      transition('in => out', [animate('300ms ease-in')]),
+    ]),
   ],
-  styles: []
+  styles: [],
 })
 export class HeaderComponent {
   isMenuOpen = false;
@@ -65,10 +67,9 @@ export class HeaderComponent {
   redirectToSignUp() {
     this.auth.loginWithRedirect({
       authorizationParams: {
-        screen_hint: 'signup'
-      }
+        screen_hint: 'signup',
+      },
     });
     this.toggleMenu(); 
   }
-  
 }
