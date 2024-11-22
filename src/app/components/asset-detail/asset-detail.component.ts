@@ -1,37 +1,22 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
-
-interface AssetDetail {
-  symbol: string;
-  name: string;
-  price: number;
-  change: number;
-  changePercent: number;
-  marketCap: number;
-  volume: number;
-  openPrice: number;
-  highPrice: number;
-  lowPrice: number;
-  buyPoints: number;
-  sellPoints: number;
-}
+import { AssetDetail } from '../../interfaces/IassetDetail';
 
 @Component({
   selector: 'app-asset-detail',
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './asset-detail.component.html',
-  styleUrls: ['./asset-detail.component.scss']
+  styleUrls: ['./asset-detail.component.scss'],
 })
 export class AssetDetailComponent implements OnInit, OnDestroy {
   private routeSub!: Subscription;
   loading: boolean = true;
   error: string | null = null;
   isInWatchlist = false;
-  
+
   asset: AssetDetail = {
     symbol: '',
     name: '',
@@ -44,7 +29,7 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
     highPrice: 0,
     lowPrice: 0,
     buyPoints: 0,
-    sellPoints: 0
+    sellPoints: 0,
   };
 
   constructor(private route: ActivatedRoute) {}
@@ -61,7 +46,7 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
         this.error = 'Error al cargar los datos del activo';
         this.loading = false;
         console.error('Error en los parámetros de ruta:', error);
-      }
+      },
     });
   }
 
@@ -81,15 +66,15 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
         symbol: symbol,
         name: 'American Airlines Group Inc.',
         price: 7.08,
-        change: 0.20,
-        changePercent: 2.90,
+        change: 0.2,
+        changePercent: 2.9,
         marketCap: 4620000000,
         volume: 2902040,
         openPrice: 6.88,
         highPrice: 7.09,
         lowPrice: 6.88,
         buyPoints: 0.89,
-        sellPoints: 8.30
+        sellPoints: 8.3,
       };
       this.loading = false;
     }, 1000);
