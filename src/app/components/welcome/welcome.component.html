@@ -1,9 +1,31 @@
-<div class="welcome-container">
+<div class="welcome-container min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-purple-500">
     <app-header (loginClick)="login()"></app-header>
-    <app-hero (loginClick)="login()"></app-hero>
-    <app-feature-cards></app-feature-cards>
-    <app-investment-quiz></app-investment-quiz>
-    <app-footer [isDashboard]="false"></app-footer>
-</div>
     
-  
+    <main class="relative overflow-hidden">
+      <app-hero (loginClick)="login()"></app-hero>
+      
+      <!-- Transition wave between Hero and Feature Cards -->
+      <div class="relative">
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden" style="transform: translateY(1px);">
+          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0L60 10C120 20 240 40 360 46.7C480 53 600 47 720 36.7C840 27 960 13 1080 16.3C1200 20 1320 40 1380 50L1440 60V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z" fill="#7C3AED"/>
+          </svg>
+        </div>
+      </div>
+      
+      <app-feature-cards></app-feature-cards>
+      
+      <!-- Transition wave between Feature Cards and Quiz -->
+      <div class="relative">
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden" style="transform: translateY(1px);">
+          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 120L60 110C120 100 240 80 360 73.3C480 67 600 73 720 83.3C840 93 960 107 1080 103.7C1200 100 1320 80 1380 70L1440 60V0H1380C1320 0 1200 0 1080 0C960 0 840 0 720 0C600 0 480 0 360 0C240 0 120 0 60 0H0V120Z" fill="#9333EA"/>
+          </svg>
+        </div>
+      </div>
+      
+      <app-investment-quiz></app-investment-quiz>
+    </main>
+    
+    <app-footer [isDashboard]="false"></app-footer>
+  </div>
