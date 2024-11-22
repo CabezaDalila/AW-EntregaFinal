@@ -1,5 +1,4 @@
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
-  <!-- Asset Distribution -->
   <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow">
     <div class="flex justify-between items-center mb-6">
       <div>
@@ -38,7 +37,6 @@
     </div>
   </div>
 
-  <!-- Recent Transactions -->
   <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow">
     <div class="flex justify-between items-center mb-6">
       <div>
@@ -85,7 +83,6 @@
   </div>
 </div>
 
-<!-- Transactions Modal -->
 <div *ngIf="showTransactionsModal" 
      class="fixed inset-0 z-50 overflow-y-auto"
      (click)="closeModal($event)">
@@ -93,7 +90,6 @@
   <div class="flex items-center justify-center min-h-screen p-4">
     <div class="bg-white rounded-xl shadow-xl w-full max-w-3xl relative" 
          (click)="$event.stopPropagation()">
-      <!-- Modal Header -->
       <div class="p-6 border-b border-gray-200">
         <div class="flex justify-between items-center">
           <div>
@@ -107,8 +103,6 @@
             </svg>
           </button>
         </div>
-
-        <!-- Search Bar -->
         <div class="mt-4 relative">
           <input type="text"
                  [(ngModel)]="searchQuery"
@@ -121,13 +115,10 @@
           </svg>
         </div>
       </div>
-
-      <!-- Transactions List -->
       <div class="max-h-[60vh] overflow-y-auto">
         <div class="p-6 space-y-4">
           <div *ngFor="let transaction of filteredTransactions" 
                class="bg-gray-50 rounded-lg overflow-hidden transition-all duration-200 hover:bg-gray-100">
-            <!-- Transaction Header -->
             <div (click)="toggleTransactionDetails(transaction.id)" 
                  class="p-4 flex items-center justify-between cursor-pointer">
               <div class="flex items-center space-x-3">
@@ -160,8 +151,6 @@
                 </svg>
               </div>
             </div>
-            
-            <!-- Transaction Details -->
             <div *ngIf="expandedTransactionId === transaction.id" 
                  class="px-4 pb-4 border-t border-gray-200">
               <div class="grid grid-cols-2 gap-4 mt-4">
@@ -184,8 +173,6 @@
               </div>
             </div>
           </div>
-
-          <!-- No Results Message -->
           <div *ngIf="filteredTransactions.length === 0" 
                class="text-center py-8">
             <p class="text-gray-500">No se encontraron transacciones</p>

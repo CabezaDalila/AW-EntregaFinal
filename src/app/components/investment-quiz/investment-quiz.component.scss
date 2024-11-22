@@ -36,18 +36,15 @@ button {
   transition: opacity 300ms, transform 300ms;
 }
 
-/* Asegura que el contenedor tenga una altura mínima */
 .min-h-800 {
   min-height: 800px;
 }
 
 
-/* Mejora la transición del quiz */
 .rounded-3xl {
   transition: all 0.3s ease-in-out;
 }
 
-/* Ajusta el espaciado del contenedor principal */
 .container {
   display: flex;
   flex-direction: column;
