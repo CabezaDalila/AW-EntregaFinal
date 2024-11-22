@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { IDailyStocksResponse } from '../interfaces/IdailyStocks';
+import { IStockDetailResponse } from '../interfaces/Istock';
 import { StockPreviousClose } from '../interfaces/IStockPreviousCloseResponse';
-import { IStockDetailResponse } from '../interfaces/stock';
 @Injectable({
   providedIn: 'root',
 })
@@ -25,10 +25,10 @@ export class ApiPolygonService {
   getDailyStocks(date: string): Observable<IDailyStocksResponse> {
     if (!this.dailyStocks) {
       const url = `https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/${date}?apiKey=${this.apiKey}`;
-      const $request = this.http.get<IDailyStocksResponse>(url)
-      $request.subscribe(response => {
+      const $request = this.http.get<IDailyStocksResponse>(url);
+      $request.subscribe((response) => {
         this.dailyStocks = response;
-      })
+      });
       return $request;
     }
     return of(this.dailyStocks);

@@ -1,10 +1,10 @@
-import { IStock } from "./stock";
+import { IStock } from './Istock';
 
 export interface IDailyStocksResponse {
-    "adjusted": boolean;
-    "queryCount": number;
-    "results": IStockWithName[];
+  adjusted: boolean;
+  queryCount: number;
+  results: IStockWithName[];
 }
 interface IStockWithName extends IStock {
-    "T": string;
+  T: string;
 }
