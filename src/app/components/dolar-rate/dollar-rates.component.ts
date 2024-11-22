@@ -26,7 +26,6 @@ export class DollarRatesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadDollarRates();
-    // Update every 30 seconds
     this.updateSubscription = interval(30000).subscribe(() => {
       this.loadDollarRates();
     });
@@ -44,7 +43,6 @@ export class DollarRatesComponent implements OnInit, OnDestroy {
 
     this.dollarRatesService.getDollarRates().subscribe({
       next: (rates) => {
-        // Calculate variation
         rates.forEach((rate) => {
           const previousRate = this.previousRates[rate.casa];
           if (previousRate) {
@@ -53,7 +51,6 @@ export class DollarRatesComponent implements OnInit, OnDestroy {
           this.previousRates[rate.casa] = rate.venta;
         });
 
-        // Filter rates to display
         this.dollarRates = rates.filter((rate) =>
           this.displayedRates.includes(rate.casa.toLowerCase())
         );

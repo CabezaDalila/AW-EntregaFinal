@@ -82,7 +82,6 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
 
   toggleWatchlist() {
     this.isInWatchlist = !this.isInWatchlist;
-    // Aquí irías a guardar el estado en tu servicio
   }
 
   formatLargeNumber(value: number): string {
@@ -94,7 +93,6 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
     return value.toString();
   }
 
-  // Método para verificar si los datos están cargados
   get isDataLoaded(): boolean {
     return !this.loading && !this.error && this.asset.symbol !== '';
   }
