@@ -2,7 +2,7 @@
   <div class="container mx-auto px-4 max-w-3xl">
     <h2 class="text-4xl font-bold text-center text-white mb-12">Pon a prueba tus conocimientos</h2>
     
-    <div class="bg-white rounded-3xl shadow-xl p-8 mb-24" *ngIf="!quizCompleted">
+    <div class="rounded-3xl shadow-xl p-8 mb-24 bg-white/80 backdrop-blur-sm" *ngIf="!quizCompleted">
       <!-- Progress and Question Counter -->
       <div class="flex justify-between items-center text-sm text-purple-600 mb-2">
         <span>Pregunta {{currentQuestion + 1}} de {{quizQuestions.length}}</span>
@@ -47,7 +47,7 @@
     </div>
 
     <!-- Results Screen -->
-    <div class="bg-white rounded-3xl shadow-xl p-8 mb-24 text-center" *ngIf="quizCompleted">
+    <div class="rounded-3xl shadow-xl p-8 mb-24 text-center bg-white/80 backdrop-blur-sm" *ngIf="quizCompleted">
       <div class="mb-8">
         <div class="inline-flex items-center justify-center w-32 h-32 rounded-full bg-purple-100">
           <span class="text-4xl font-bold text-purple-600">
