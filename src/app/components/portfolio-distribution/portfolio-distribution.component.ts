@@ -2,31 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '@auth0/auth0-angular';
+import { Asset } from '../../interfaces/Iasset';
+import { Transaction } from '../../interfaces/ITransaction';
 import { SupabaseService } from '../../Services/supabase.service';
-
-interface Asset {
-  name: string;
-  percentage: number;
-  color: string;
-}
-
-interface Transaction {
-  id: string;
-  ticker: string;
-  type: 'buy' | 'sell';
-  amount: number;
-  details: {
-    shares: number;
-    price: number;
-  };
-}
-
 @Component({
   selector: 'app-portfolio-distribution',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './portfolio-distribution.component.html',
-  styleUrls: ['./portfolio-distribution.component.scss']
+  styleUrls: ['./portfolio-distribution.component.scss'],
 })
 export class PortfolioDistributionComponent implements OnInit {
   showTransactionsModal = false;
@@ -35,7 +19,7 @@ export class PortfolioDistributionComponent implements OnInit {
   searchQuery: string = '';
   assetDistribution: Asset[] = [
     { name: '', percentage: 0, color: '' },
-    { name: '', percentage: 0, color: '' }
+    { name: '', percentage: 0, color: '' },
   ];
   allTransactions: Transaction[] = [];
   availableStock: number = 0;
@@ -49,28 +33,33 @@ export class PortfolioDistributionComponent implements OnInit {
       if (isAuthenticated) {
         this.auth.user$.subscribe((user) => {
           if (user?.email) {
-            this.supabase.getDataPortfolioUser({ email: user.email })
+            this.supabase
+              .getDataPortfolioUser({ email: user.email })
               .then((data) => {
                 this.availableStock = data.dineroDisponible;
                 this.totalInvested = data.totalInvertido;
-                
+
                 if (data.transaccionAllData) {
-                  this.allTransactions = data.transaccionAllData.map((item: any) => ({
-                    ticker: item.ticker,
-                    id: item.id,
-                    type: item.tipoTransaccion === 'buy' ? 'buy' : 'sell',
-                    amount: parseFloat(((item.cantidad ?? 0) * (item.precio ?? 0)).toFixed(2)),
-                    details: {
-                      shares: item.cantidad ?? 0,
-                      price: item.precio ?? 0
-                    }
-                  }));
+                  this.allTransactions = data.transaccionAllData.map(
+                    (item: any) => ({
+                      ticker: item.ticker,
+                      id: item.id,
+                      type: item.tipoTransaccion === 'buy' ? 'buy' : 'sell',
+                      amount: parseFloat(
+                        ((item.cantidad ?? 0) * (item.precio ?? 0)).toFixed(2)
+                      ),
+                      details: {
+                        shares: item.cantidad ?? 0,
+                        price: item.precio ?? 0,
+                      },
+                    })
+                  );
                 }
-                
+
                 this.distributionAssets();
               })
               .catch((error) => {
-                console.error("Error al obtener datos:", error);
+                console.error('Error al obtener datos:', error);
               });
           }
         });
@@ -80,21 +69,25 @@ export class PortfolioDistributionComponent implements OnInit {
 
   distributionAssets() {
     const total = this.availableStock + this.totalInvested;
-    const stockPercentage = parseFloat(((this.totalInvested / total) * 100).toFixed(2));
-    const cashPercentage = parseFloat(((this.availableStock / total) * 100).toFixed(2));
+    const stockPercentage = parseFloat(
+      ((this.totalInvested / total) * 100).toFixed(2)
+    );
+    const cashPercentage = parseFloat(
+      ((this.availableStock / total) * 100).toFixed(2)
+    );
 
     // Asignar colores basados en el porcentaje
     this.assetDistribution = [
       {
-        name: "Acciones",
+        name: 'Acciones',
         percentage: stockPercentage,
-        color: this.getGradientColor(stockPercentage)
+        color: this.getGradientColor(stockPercentage),
       },
       {
-        name: "Efectivo",
+        name: 'Efectivo',
         percentage: cashPercentage,
-        color: this.getGradientColor(cashPercentage)
-      }
+        color: this.getGradientColor(cashPercentage),
+      },
     ];
   }
 
@@ -106,9 +99,12 @@ export class PortfolioDistributionComponent implements OnInit {
   }
 
   get filteredTransactions(): Transaction[] {
-    return this.allTransactions.filter(transaction => {
-      const matchesSearch = !this.searchQuery ||
-        transaction.ticker.toLowerCase().includes(this.searchQuery.toLowerCase());
+    return this.allTransactions.filter((transaction) => {
+      const matchesSearch =
+        !this.searchQuery ||
+        transaction.ticker
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase());
       return matchesSearch;
     });
   }
@@ -133,7 +129,8 @@ export class PortfolioDistributionComponent implements OnInit {
   }
 
   toggleTransactionDetails(transactionId: string) {
-    this.expandedTransactionId = this.expandedTransactionId === transactionId ? null : transactionId;
+    this.expandedTransactionId =
+      this.expandedTransactionId === transactionId ? null : transactionId;
   }
 
   resetFilters() {

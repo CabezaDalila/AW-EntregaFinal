@@ -3,31 +3,51 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { catchError, of } from 'rxjs';
 import { ApiPolygonService } from '../../Services/api-polygon.service';
-
-interface StockData {
-  symbol: string;
-  price: number;
-  change: number;
-  changePercent: number;
-  volume: number;
-  lastUpdate: Date;
-}
+import { StockData } from '../../interfaces/IstockData';
 
 @Component({
   selector: 'app-cotizaciones-principales',
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './cotizaciones-principales.component.html',
-  styleUrls: ['./cotizaciones-principales.component.scss']
+  styleUrls: ['./cotizaciones-principales.component.scss'],
 })
 export class CotizacionesPrincipalesComponent implements OnInit {
   stocks: StockData[] = [
-    { symbol: 'AAPL', price: 0, change: 0, changePercent: 0, volume: 0, lastUpdate: new Date() },
-    { symbol: 'MSFT', price: 0, change: 0, changePercent: 0, volume: 0, lastUpdate: new Date() },
-    { symbol: 'GOOGL', price: 0, change: 0, changePercent: 0, volume: 0, lastUpdate: new Date() },
-    { symbol: 'AMZN', price: 0, change: 0, changePercent: 0, volume: 0, lastUpdate: new Date() }
+    {
+      symbol: 'AAPL',
+      price: 0,
+      change: 0,
+      changePercent: 0,
+      volume: 0,
+      lastUpdate: new Date(),
+    },
+    {
+      symbol: 'MSFT',
+      price: 0,
+      change: 0,
+      changePercent: 0,
+      volume: 0,
+      lastUpdate: new Date(),
+    },
+    {
+      symbol: 'GOOGL',
+      price: 0,
+      change: 0,
+      changePercent: 0,
+      volume: 0,
+      lastUpdate: new Date(),
+    },
+    {
+      symbol: 'AMZN',
+      price: 0,
+      change: 0,
+      changePercent: 0,
+      volume: 0,
+      lastUpdate: new Date(),
+    },
   ];
-  
+
   updating: boolean = false;
   error: string | null = null;
   private readonly LOCAL_STORAGE_KEY = 'stocksData';
@@ -44,16 +64,17 @@ export class CotizacionesPrincipalesComponent implements OnInit {
     this.updating = true;
     this.error = null;
 
-    const promises = this.stocks.map(stock => {
-      return this.apiPolygon.getStockPreviousClose(stock.symbol)
+    const promises = this.stocks.map((stock) => {
+      return this.apiPolygon
+        .getStockPreviousClose(stock.symbol)
         .pipe(
-          catchError(error => {
+          catchError((error) => {
             console.error(`Error fetching ${stock.symbol}:`, error);
             return of(null);
           })
         )
         .toPromise()
-        .then(data => {
+        .then((data) => {
           if (data?.results?.[0]) {
             const result = data.results[0];
             const previousPrice = stock.price;
@@ -70,7 +91,7 @@ export class CotizacionesPrincipalesComponent implements OnInit {
       .then(() => {
         this.saveStocksToStorage();
       })
-      .catch(error => {
+      .catch((error) => {
         this.error = 'Error al actualizar las cotizaciones';
         console.error('Error updating stocks:', error);
       })
@@ -85,7 +106,7 @@ export class CotizacionesPrincipalesComponent implements OnInit {
       const parsedData = JSON.parse(savedData);
       this.stocks = parsedData.map((stock: any) => ({
         ...stock,
-        lastUpdate: new Date(stock.lastUpdate)
+        lastUpdate: new Date(stock.lastUpdate),
       }));
     }
   }
@@ -98,7 +119,7 @@ export class CotizacionesPrincipalesComponent implements OnInit {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
-      minimumFractionDigits: 2
+      minimumFractionDigits: 2,
     }).format(price);
   }
 
@@ -106,7 +127,7 @@ export class CotizacionesPrincipalesComponent implements OnInit {
     return new Intl.NumberFormat('en-US', {
       style: 'percent',
       minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+      maximumFractionDigits: 2,
     }).format(value / 100);
   }
 
@@ -121,15 +142,16 @@ export class CotizacionesPrincipalesComponent implements OnInit {
 
   getTimeAgo(date: Date): string {
     const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
-    
+
     if (seconds < 60) return 'hace menos de un minuto';
-    
+
     const minutes = Math.floor(seconds / 60);
-    if (minutes < 60) return `hace ${minutes} ${minutes === 1 ? 'minuto' : 'minutos'}`;
-    
+    if (minutes < 60)
+      return `hace ${minutes} ${minutes === 1 ? 'minuto' : 'minutos'}`;
+
     const hours = Math.floor(minutes / 60);
     if (hours < 24) return `hace ${hours} ${hours === 1 ? 'hora' : 'horas'}`;
-    
+
     const days = Math.floor(hours / 24);
     return `hace ${days} ${days === 1 ? 'día' : 'días'}`;
   }
