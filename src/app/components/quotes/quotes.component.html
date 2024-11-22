@@ -21,12 +21,12 @@
       </div>
     </div>
 
-    <!-- Loading State -->
+   
     <div *ngIf="isLoading" class="flex justify-center items-center py-12">
       <div class="animate-spin rounded-full h-12 w-12 border-4 border-primary-200 border-t-primary-600"></div>
     </div>
 
-    <!-- Table -->
+   
     <div *ngIf="!isLoading" class="overflow-x-auto">
       <table class="min-w-full divide-y divide-gray-200">
         <thead>
@@ -72,7 +72,7 @@
       </table>
     </div>
 
-    <!-- Pagination -->
+    
     <div class="flex items-center justify-between mt-6 px-4">
       <div class="flex items-center space-x-2">
         <button [disabled]="currentPage === 1"
@@ -114,7 +114,7 @@
     </div>
   </div>
 
-  <!-- Modal de compra -->
+
   <app-detail-ticker 
     *ngIf="showBuyModal && selectedStock"
     [isOpen]="showBuyModal" 

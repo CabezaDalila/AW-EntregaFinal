@@ -43,7 +43,7 @@ export class DollarRatesService {
       compra: parseFloat(apiRate.compra),
       venta: parseFloat(apiRate.venta),
       fechaActualizacion: new Date(apiRate.fechaActualizacion),
-      variacion: undefined, // Se puede calcular más tarde si es necesario
+      variacion: undefined,
     };
   }
 }

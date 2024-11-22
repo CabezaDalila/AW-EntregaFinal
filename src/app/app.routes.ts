@@ -38,7 +38,7 @@ export const routes: Routes = [
         component: HomeComponent,
       },
       {
-        path: 'asset/:symbol',  // Esta es la ruta para el detalle del activo
+        path: 'asset/:symbol',
         component: AssetDetailComponent
       },
       {
