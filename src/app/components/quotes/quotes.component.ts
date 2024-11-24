@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { ApiPolygonService } from '../../Services/api-polygon.service';
-import { DetailTickerComponent  } from '../detail-ticker/detail-ticker.component';
 import { IDailyStocksResponse } from '../../interfaces/IdailyStocks';
 import { PurchaseResult } from '../../interfaces/IpurchaseResult';
+import { ApiPolygonService } from '../../Services/api-polygon.service';
 import { formatYYYYMMDD } from '../../shared/utils/date.utility';
+import { DetailTickerComponent } from '../detail-ticker/detail-ticker.component';
 
 @Component({
   selector: 'app-quotes',
@@ -28,6 +28,7 @@ export class QuotesComponent implements OnInit {
   maxVisiblePages: number = 5; 
   showBuyModal=false;
   selectedStock: IDailyStocksResponse['results'][0] | null = null;
+  
   constructor(private apiPolygon: ApiPolygonService) {}
   ngOnInit(): void {
     this.getDailyStock();
@@ -43,7 +44,14 @@ export class QuotesComponent implements OnInit {
 
   getDailyStock(): void {
     const date = new Date();
+    const dayOfWeek = date.getDay();
     date.setDate(date.getDate() - 1);
+    
+    if (dayOfWeek === 0) {
+      date.setDate(date.getDate() - 2);
+    } else if (dayOfWeek === 6) {
+      date.setDate(date.getDate() - 1);
+    }
     const todayFormatted = formatYYYYMMDD(date);
 
     this.apiPolygon.getDailyStocks(todayFormatted).subscribe(
